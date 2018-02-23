@@ -15,7 +15,7 @@ source:
 
 build:
   number: 0
-  skip: true  # [win or osx or not py36]
+  skip: true  # [win or osx]
   features:
     - blas_{{ blas_variant }}
 
