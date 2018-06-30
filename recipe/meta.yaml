@@ -14,23 +14,22 @@ source:
   md5: {{ md5 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win or osx]
   features:
     - blas_{{ blas_variant }}
 
 requirements:
   build:
-    - toolchain
-    - gcc
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+  host:
     - blas 1.1 {{ blas_variant }}
-    - openblas 0.2.20|0.2.20.*
-    - libgfortran
+    - openblas
     - netcdf-fortran
   run:
     - blas 1.1 {{ blas_variant }}
-    - openblas 0.2.20|0.2.20.*
-    - libgfortran
+    - openblas
     - netcdf-fortran
 
 test:
