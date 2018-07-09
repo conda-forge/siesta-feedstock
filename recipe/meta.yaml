@@ -24,11 +24,11 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - blas {{ blas_variant }}
+    - blas 1.1 {{ blas_variant }}
     - openblas
     - netcdf-fortran
   run:
-    - blas {{ blas_variant }}
+    - blas 1.1 {{ blas_variant }}
     - openblas
     - netcdf-fortran
 
