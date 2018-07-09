@@ -4,6 +4,7 @@ c_compiler:
 - toolchain_c
 fortran_compiler:
 - toolchain_fort
+- libgfortran
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:

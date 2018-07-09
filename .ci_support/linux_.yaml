@@ -2,6 +2,7 @@ c_compiler:
 - toolchain_c
 fortran_compiler:
 - toolchain_fort
+- libgfortran
 netcdf_fortran:
 - '4.4'
 openblas:
