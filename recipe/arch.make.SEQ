@@ -33,7 +33,7 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-LDFLAGS =
+LDFLAGS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib
 
 COMP_LIBS =
 

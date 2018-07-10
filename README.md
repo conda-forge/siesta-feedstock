@@ -23,14 +23,16 @@ quality of other approaches, such as plane-wave and all-electron methods.
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/siesta-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/siesta-feedstock)
-OSX: ![](https://cdn.rawgit.com/conda-forge/conda-smithy/90845bba35bec53edac7a16638aa4d77217a3713/conda_smithy/static/disabled.svg)
-Windows: ![](https://cdn.rawgit.com/conda-forge/conda-smithy/90845bba35bec53edac7a16638aa4d77217a3713/conda_smithy/static/disabled.svg)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/siesta-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/siesta-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/siesta-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/siesta-feedstock)
+![Windows disabled](https://img.shields.io/badge/Windows-disabled-lightgrey.svg)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/siesta/badges/version.svg)](https://anaconda.org/conda-forge/siesta)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/siesta/badges/downloads.svg)](https://anaconda.org/conda-forge/siesta)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-siesta-green.svg)](https://anaconda.org/conda-forge/siesta) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/siesta.svg)](https://anaconda.org/conda-forge/siesta) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/siesta.svg)](https://anaconda.org/conda-forge/siesta) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/siesta.svg)](https://anaconda.org/conda-forge/siesta) |
 
 Installing siesta
 =================
