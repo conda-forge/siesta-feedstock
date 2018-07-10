@@ -18,7 +18,7 @@ function mkcp {
 	exe=$1
 	shift
     fi
-    make $target || cat FoX/config.log
+    make $target
     cp $target $PREFIX/bin/$exe
     make clean
 }
