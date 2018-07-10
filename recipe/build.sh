@@ -19,6 +19,9 @@ function mkcp {
 	shift
     fi
     make $target
+    if [ $exe == 'siesta' ]; then
+      cat FoX/config.log
+fi
     cp $target $PREFIX/bin/$exe
     make clean
 }
