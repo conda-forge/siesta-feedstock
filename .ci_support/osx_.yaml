@@ -11,7 +11,7 @@ macos_min_version:
 netcdf_fortran:
 - '4.4'
 openblas:
-- 0.3.1
+- 0.2.20
 pin_run_as_build:
   netcdf-fortran:
     max_pin: x.x

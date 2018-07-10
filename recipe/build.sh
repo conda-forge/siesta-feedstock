@@ -1,9 +1,5 @@
 #!/bin/sh
 
-if [ $(uname) == "Darwin" ]; then
-    export LDFLAGS="$LDFLAGS -Wl,-rpath=${PREFIX}/lib -L${PREFIX}/lib"
-fi
-
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 

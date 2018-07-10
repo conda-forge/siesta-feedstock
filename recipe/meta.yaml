@@ -26,14 +26,10 @@ requirements:
   host:
     - blas 1.1 {{ blas_variant }}
     - openblas
-    - libgfortran-ng >=3.0  # [osx]
-    - libgfortran-ng >=4.9  # [linux]
     - netcdf-fortran
   run:
     - blas 1.1 {{ blas_variant }}
     - openblas
-    - libgfortran-ng >=3.0  # [osx]
-    - libgfortran-ng >=4.9  # [linux]
     - netcdf-fortran
 
 test:
