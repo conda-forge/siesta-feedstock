@@ -27,7 +27,6 @@ mkcp siesta
 mkcp transiesta
 
 cd ../Util/Bands
-mkcp new.gnubands
 mkcp eigfat2plot
 mkcp gnubands
 
