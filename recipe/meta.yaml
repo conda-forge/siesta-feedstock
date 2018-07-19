@@ -1,7 +1,8 @@
 {% set name = "siesta" %}
 {% set version_base = "4.0" %}
-{% set version = "4.0.1" %}
-{% set md5 = "5cb60ce068f2f6e84fa9184ffca94c08" %}
+{% set version = "4.0.2" %}
+{% set md5 = "5f6d1c2ffb96c58bb45c5d76b6bb4bb2" %}
+{% set sha256 = "bafbda19358f0c1dd39bb1253c92ee548791a1c0f648977051d2657216874f7e" %}
 {% set blas_variant = "openblas" %}
 
 package:
@@ -12,9 +13,10 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://launchpad.net/{{ name }}/{{ version_base }}/{{ version }}/+download/{{ name }}-{{ version }}.tar.gz
   md5: {{ md5 }}
+  sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   features:
     - blas_{{ blas_variant }}
