@@ -30,12 +30,13 @@ requirements:
     - blas 1.1 {{ blas_variant }}
     - openblas
     - netcdf-fortran
-    - openblas
+    - scalapack
   run:
     - {{ mpi }}
     - blas 1.1 {{ blas_variant }}
     - openblas
     - netcdf-fortran
+    - scalapack
 
 test:
   commands:
