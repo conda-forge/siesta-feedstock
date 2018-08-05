@@ -44,6 +44,8 @@ FFLAGS += -I__SIESTA_PREFIX__/include
 LIBS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib -lscalapack -lopenblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
+MPI_INTERFACE=libmpi_f90.a
+MPI_INCLUDE=.
 
 # Dependency rules ---------
 
