@@ -39,14 +39,16 @@ mkcp denchar
 cd ../../Eig2DOS
 mkcp Eig2DOS
 
-cd ../Gen-basis
-mkcp gen-basis
-mkcp ioncat
+# Apparently the NetCDF module can *only* be found in Siesta compilation
+#    ???
+#cd ../Gen-basis
+#mkcp gen-basis
+#mkcp ioncat
 
 cd ../Grid
 mkcp grid2cube
-mkcp cdf2xsf
-mkcp cdf2grid
+#mkcp cdf2xsf
+#mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
@@ -70,4 +72,4 @@ mkcp readwfx
 mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-mkcp wfsnc2fsx
+#mkcp wfsnc2fsx
