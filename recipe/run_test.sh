@@ -5,6 +5,5 @@ cat <<EOF > RUN.fdf
 Do nothing
 EOF
 
-siesta < RUN.fdf
-[ $? -eq 0 ] && echo Failed
+siesta < RUN.fdf || echo SHOULD FAIL
 rm RUN.fdf

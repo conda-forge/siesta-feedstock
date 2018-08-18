@@ -23,7 +23,6 @@ FC_SERIAL = gfortran
 FPP = $(FC) -E -P -x c
 
 FFLAGS = -O2 -fPIC -ftree-vectorize
-FFLAGS += -I__CONDA_PREFIX__/include
 
 AR = ar
 RANLIB = ranlib

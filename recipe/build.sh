@@ -7,9 +7,6 @@ sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 cd Obj
 ../Src/obj_setup.sh
 
-# Create arch.make file by replacing the prefix directory
-sed -e "s:__CONDA_PREFIX__:$ORIGIN/../:g" $RECIPE_DIR/arch.make.MPI > ./arch.make
-
 function mkcp {
     local target=$1
     shift
