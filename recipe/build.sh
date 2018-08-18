@@ -7,6 +7,8 @@ sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 cd Obj
 ../Src/obj_setup.sh
 
+cp $RECIPE/arch.make.MPI arch.make
+
 function mkcp {
     local target=$1
     shift
