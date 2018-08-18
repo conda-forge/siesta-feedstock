@@ -1,9 +1,11 @@
 #!/bin/sh
 set -e
+
+echo "Running tests"
 ls -l
 
 for cmd in siesta transiesta tbtrans \
-		  eigfact2plot gnubands mprop fat \
+		  eigfat2plot gnubands mprop fat \
 		  denchar Eig2DOS \
 		  grid2cube grid_rotate grid_supercell \
 		  fcbuild vibra \
@@ -19,10 +21,11 @@ export OMPI_MCA_rmaps_base_oversubscribe=yes
 
 # Run H2O system
 mkdir h2o
-cd h2o
+
+pushd h2o
 cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
 mpirun --allow-run-as-root siesta < h2o.fdf > h2o.out
-cd ..
+popd
 
