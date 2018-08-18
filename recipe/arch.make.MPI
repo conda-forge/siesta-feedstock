@@ -35,7 +35,7 @@ KINDS = $(SP_KIND) $(DP_KIND)
 
 COMP_LIBS =
 
-FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI
+FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
 
 LIBS = -lscalapack -lopenblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz

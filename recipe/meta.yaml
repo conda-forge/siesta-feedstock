@@ -38,6 +38,10 @@ requirements:
     - netcdf-fortran
     - scalapack
 
+test:
+  source_files:
+    - Tests/**
+
 about:
   home: https://launchpad.net/siesta/
   license: GPL-3
