@@ -23,6 +23,7 @@ FC_SERIAL = gfortran
 FPP = $(FC) -E -P -x c
 
 FFLAGS = -O2 -fPIC -ftree-vectorize
+FFLAGS += -I__CONDA_PREFIX__/include
 
 AR = ar
 RANLIB = ranlib
@@ -33,15 +34,11 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-LDFLAGS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib
-
 COMP_LIBS =
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI
 
-FFLAGS += -I__SIESTA_PREFIX__/include
-
-LIBS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib -lscalapack -lopenblas
+LIBS = -lscalapack -lopenblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
 MPI_INTERFACE=libmpi_f90.a

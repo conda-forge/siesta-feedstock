@@ -8,7 +8,7 @@ cd Obj
 ../Src/obj_setup.sh
 
 # Create arch.make file by replacing the prefix directory
-sed -e "s:__SIESTA_PREFIX__:$PREFIX:g" $RECIPE_DIR/arch.make.MPI > ./arch.make
+sed -e "s:__CONDA_PREFIX__:$ORIGIN/../:g" $RECIPE_DIR/arch.make.MPI > ./arch.make
 
 function mkcp {
     local target=$1
