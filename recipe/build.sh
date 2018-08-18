@@ -7,8 +7,7 @@ sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 cd Obj
 ../Src/obj_setup.sh
 
-# Create arch.make file by replacing the prefix directory
-sed -e "s:__SIESTA_PREFIX__:$PREFIX:g" $RECIPE_DIR/arch.make.MPI > ./arch.make
+cp $RECIPE_DIR/arch.make.MPI arch.make
 
 function mkcp {
     local target=$1
@@ -30,9 +29,6 @@ cd ../Util/Bands
 mkcp eigfat2plot
 mkcp gnubands
 
-cd ../Eig2DOS
-mkcp Eig2DOS
-
 cd ../COOP
 mkcp mprop
 mkcp fat
@@ -40,7 +36,23 @@ mkcp fat
 cd ../Denchar/Src
 mkcp denchar
 
-cd ../../TBTrans_rep
+cd ../../Eig2DOS
+mkcp Eig2DOS
+
+# Apparently the NetCDF module can *only* be found in Siesta compilation
+#    ???
+#cd ../Gen-basis
+#mkcp gen-basis
+#mkcp ioncat
+
+cd ../Grid
+mkcp grid2cube
+#mkcp cdf2xsf
+#mkcp cdf2grid
+mkcp grid_rotate
+mkcp grid_supercell
+
+cd ../TBTrans_rep
 mkcp tbtrans
 
 cd ../TBTrans
@@ -50,3 +62,14 @@ cd ../Vibra/Src
 mkcp fcbuild
 mkcp vibra
 
+cd ../../VCA
+mkcp mixps
+mkcp fractional
+
+cd ../WFS
+mkcp readwf
+mkcp readwfx
+mkcp info_wfsx
+mkcp wfs2wfsx
+mkcp wfsx2wfs
+#mkcp wfsnc2fsx

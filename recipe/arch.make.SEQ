@@ -33,17 +33,12 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-LDFLAGS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib
-
 COMP_LIBS =
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF
 
-FFLAGS += -I__SIESTA_PREFIX__/include
-
-LIBS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib -lopenblas
+LIBS = -lopenblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
-
 
 # Dependency rules ---------
 
@@ -65,4 +60,3 @@ atom.o: atom.F
 	$(FC) -c $(FFLAGS) $(INCFLAGS) $(FCFLAGS_fixed_f)  $<
 .f90.o:
 	$(FC) -c $(FFLAGS) $(INCFLAGS) $(FCFLAGS_free_f90)  $<
-

@@ -6,7 +6,7 @@
 # See Docs/Contributors.txt for a list of contributors.
 #
 #-------------------------------------------------------------------
-# arch.make file for gfortran compiler.
+# arch.make file for MPI/gfortran compiler.
 # To use this arch.make file you should rename it to
 #   arch.make
 # or make a sym-link.
@@ -33,15 +33,11 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-LDFLAGS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib
-
 COMP_LIBS =
 
-FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI
+FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
 
-FFLAGS += -I__SIESTA_PREFIX__/include
-
-LIBS = -Wl,-rpath,__SIESTA_PREFIX__/lib -L__SIESTA_PREFIX__/lib -lscalapack -lopenblas
+LIBS = -lscalapack -lopenblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
 MPI_INTERFACE=libmpi_f90.a
@@ -67,4 +63,3 @@ atom.o: atom.F
 	$(FC) -c $(FFLAGS) $(INCFLAGS) $(FCFLAGS_fixed_f)  $<
 .f90.o:
 	$(FC) -c $(FFLAGS) $(INCFLAGS) $(FCFLAGS_free_f90)  $<
-
