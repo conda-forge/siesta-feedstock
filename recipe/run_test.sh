@@ -26,6 +26,6 @@ pushd h2o
 cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
-mpirun --allow-run-as-root siesta < h2o.fdf > h2o.out
+mpirun siesta < h2o.fdf > h2o.out
 popd
 
