@@ -16,7 +16,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 1002
   skip: true  # [win]
   features:
     - blas_{{ blas_variant }}
