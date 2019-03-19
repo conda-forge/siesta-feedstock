@@ -16,26 +16,23 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
   features:
-    - blas_{{ blas_variant }}
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
+    - libblas
+    - libcblas
     - {{ mpi }}
-    - blas 1.1 {{ blas_variant }}
-    - openblas
     - netcdf-fortran
     - scalapack
   run:
     - ssh
     - {{ mpi }}
-    - blas 1.1 {{ blas_variant }}
-    - openblas
     - netcdf-fortran
     - scalapack
 
