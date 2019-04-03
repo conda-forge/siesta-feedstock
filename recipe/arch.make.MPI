@@ -37,7 +37,7 @@ COMP_LIBS =
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
 
-LIBS = -lscalapack -lopenblas
+LIBS = -lscalapack -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
 MPI_INTERFACE=libmpi_f90.a

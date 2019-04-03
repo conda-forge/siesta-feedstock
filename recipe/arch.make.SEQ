@@ -37,7 +37,7 @@ COMP_LIBS =
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF
 
-LIBS = -lopenblas
+LIBS = -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
 # Dependency rules ---------
