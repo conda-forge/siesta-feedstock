@@ -3,7 +3,6 @@
 {% set version = "4.0.2" %}
 {% set md5 = "5f6d1c2ffb96c58bb45c5d76b6bb4bb2" %}
 {% set sha256 = "bafbda19358f0c1dd39bb1253c92ee548791a1c0f648977051d2657216874f7e" %}
-{% set blas_variant = "openblas" %}
 
 package:
   name: {{ name }}
@@ -24,15 +23,13 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - libblas
-    - libcblas
+    - {{ blas_impl }}
     - {{ mpi }}
     - netcdf-fortran
     - scalapack
   run:
     - ssh
-    - libblas
-    - libcblas
+    - {{ blas_impl }}
     - {{ mpi }}
     - netcdf-fortran
     - scalapack
