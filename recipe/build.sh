@@ -9,13 +9,14 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 cd Obj
 ../Src/obj_setup.sh
 
+# In 4.0 we do not use OpenMP!
 repl="s:%CC%:$GCC:g"
-repl="$repl;s:%CFLAGS%:$CFLAGS:g"
+repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
 repl="$repl;s:%AR%:$GCC_AR:g"
 repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
 repl="$repl;s:%FC%:$FC:g"
-repl="$repl;s:%FFLAGS%:$FFLAGS:g"
-repl="$repl;s:%FFLAGS_DEBUG%:$DEBUG_FFLAGS:g"
+repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
+repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
