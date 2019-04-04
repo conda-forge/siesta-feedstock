@@ -17,6 +17,7 @@ repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
 repl="$repl;s:%FC%:$FC:g"
 repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
 repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
+repl="$repl;s:%LDFLAGS%:-Wl,-rpath,$PREFIX/lib -Wl,-rpath-link,$PREFIX/lib -L$PREFIX/lib:g"
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make

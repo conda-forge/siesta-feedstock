@@ -41,7 +41,7 @@ FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
 LIBS = -lscalapack -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
-LDFLAGS =
+LDFLAGS = %LDFLAGS%
 
 MPI_INTERFACE=libmpi_f90.a
 MPI_INCLUDE=.

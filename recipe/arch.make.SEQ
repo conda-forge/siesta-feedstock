@@ -41,7 +41,7 @@ FPPFLAGS = -DFC_HAVE_ABORT -DCDF
 LIBS = -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
-LDFLAGS =
+LDFLAGS = %LDFLAGS%
 
 # Dependency rules ---------
 
