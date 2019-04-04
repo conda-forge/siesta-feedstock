@@ -17,15 +17,15 @@
 
 SIESTA_ARCH = unknown
 
-CC = gcc
+CC = ${GCC}
 FC = mpifort
-FC_SERIAL = gfortran
-FPP = $(FC) -E -P -x c
+FC_SERIAL = ${FC}
+FPP := $(FC_SERIAL) -E -P -x c
 
 FFLAGS = -O2 -fPIC -ftree-vectorize
 
-AR = ar
-RANLIB = ranlib
+AR = ${GCC_AR}
+RANLIB = ${GCC_RANLIB}
 
 SYS = nag
 
