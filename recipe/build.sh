@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+
+echo "ENV"
+env
+echo "ENV"
+
 
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
@@ -6,6 +11,7 @@ sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 # Use the default utilities, for now.
 cd Obj
 ../Src/obj_setup.sh
+
 
 cp $RECIPE_DIR/arch.make.MPI arch.make
 
@@ -21,6 +27,9 @@ function mkcp {
     cp $target $PREFIX/bin/$exe
     make clean
 }
+
+# First make a few of the libraries to check that they work!
+make libxmlparser.a libfdf.a
 
 mkcp siesta
 mkcp transiesta

@@ -14,9 +14,28 @@ source:
   md5: {{ md5 }}
   sha256: {{ sha256 }}
 
+# Define build matrix for MPI vs. non-mpi
+{% set build = 4 %}
+{% if mpi == 'nompi' %}
+# prioritize nompi variant via build number
+{% set build = build + 1000 %}
+{% endif %}
+
 build:
-  number: 3
+  number: {{ build }}
   skip: true  # [win]
+
+  {% if mpi != 'nompi' %}
+  {% set mpi_prefix = "mpi_" + mpi %}
+  {% else %}
+  {% set mpi_prefix = "nompi" %}
+  {% endif %}
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+
+  {% if mpi != 'nompi' %}
+  run_exports:
+    - {{ name }} * {{ mpi_prefix }}_*
+  {% endif %}
 
 requirements:
   build:
@@ -25,17 +44,17 @@ requirements:
   host:
     - {{ blas_impl }}
     - liblapack
-    - {{ mpi }}
+    - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - scalapack
+    - scalapack  # [mpi != 'nompi']
   run:
     - ssh
     - libblas * *{{ blas_impl }}
     - {{ blas_impl }}
     - liblapack
-    - {{ mpi }}
+    - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - scalapack
+    - scalapack  # [mpi != 'nompi']
 
 test:
   source_files:
