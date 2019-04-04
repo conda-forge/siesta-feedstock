@@ -13,17 +13,26 @@ jobs:
       osx_blas_implblismpimpich:
         CONFIG: osx_blas_implblismpimpich
         UPLOAD_PACKAGES: True
+      osx_blas_implblismpinompi:
+        CONFIG: osx_blas_implblismpinompi
+        UPLOAD_PACKAGES: True
       osx_blas_implblismpiopenmpi:
         CONFIG: osx_blas_implblismpiopenmpi
         UPLOAD_PACKAGES: True
       osx_blas_implmklmpimpich:
         CONFIG: osx_blas_implmklmpimpich
         UPLOAD_PACKAGES: True
+      osx_blas_implmklmpinompi:
+        CONFIG: osx_blas_implmklmpinompi
+        UPLOAD_PACKAGES: True
       osx_blas_implmklmpiopenmpi:
         CONFIG: osx_blas_implmklmpiopenmpi
         UPLOAD_PACKAGES: True
       osx_blas_implopenblasmpimpich:
         CONFIG: osx_blas_implopenblasmpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasmpinompi:
+        CONFIG: osx_blas_implopenblasmpinompi
         UPLOAD_PACKAGES: True
       osx_blas_implopenblasmpiopenmpi:
         CONFIG: osx_blas_implopenblasmpiopenmpi
