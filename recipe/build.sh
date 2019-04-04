@@ -9,10 +9,18 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 cd Obj
 ../Src/obj_setup.sh
 
+repl="s:%CC%:$GCC:g"
+repl="$repl;s:%CFLAGS%:$CFLAGS:g"
+repl="$repl;s:%AR%:$GCC_AR:g"
+repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
+repl="$repl;s:%FC%:$FC:g"
+repl="$repl;s:%FFLAGS%:$FFLAGS:g"
+repl="$repl;s:%FFLAGS_DEBUG%:$DEBUG_FFLAGS:g"
+
 if [[ "$mpi" == "nompi" ]]; then
-    cp $RECIPE_DIR/arch.make.SEQ arch.make
+    sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
 else
-    cp $RECIPE_DIR/arch.make.MPI arch.make
+    sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
 fi
 
 function mkcp {

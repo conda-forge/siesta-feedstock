@@ -17,15 +17,16 @@
 
 SIESTA_ARCH = unknown
 
-CC = ${GCC}
-FC = ${FC}
-FC_SERIAL = ${FC}
+CC = %CC%
+FC = %FC%
+FC_SERIAL = %FC%
 FPP := $(FC_SERIAL) -E -P -x c
 
-FFLAGS = -O2 -fPIC -ftree-vectorize
+CFLAGS = %CFLAGS%
+FFLAGS = %FFLAGS%
 
-AR = ${GCC_AR}
-RANLIB = ${GCC_RANLIB}
+AR = %AR%
+RANLIB = %RANLIB%
 
 SYS = nag
 
@@ -42,7 +43,8 @@ LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
 
 # Dependency rules ---------
 
-FFLAGS_DEBUG = -g -O1   # your appropriate flags here...
+# -g -O1   # your appropriate flags here...
+FFLAGS_DEBUG = %FFLAGS_DEBUG%
 
 # The atom.f code is very vulnerable. Particularly the Intel compiler
 # will make an erroneous compilation of atom.f with high optimization

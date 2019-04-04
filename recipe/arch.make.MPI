@@ -17,15 +17,15 @@
 
 SIESTA_ARCH = unknown
 
-CC = ${GCC}
+CC = %CC%
 FC = mpifort
-FC_SERIAL = ${FC}
+FC_SERIAL = %FC%
 FPP := $(FC_SERIAL) -E -P -x c
 
-FFLAGS = -O2 -fPIC -ftree-vectorize
+FFLAGS = %FFLAGS%
 
-AR = ${GCC_AR}
-RANLIB = ${GCC_RANLIB}
+AR = %AR%
+RANLIB = %RANLIB%
 
 SYS = nag
 
@@ -45,7 +45,8 @@ MPI_INCLUDE=.
 
 # Dependency rules ---------
 
-FFLAGS_DEBUG = -g -O1   # your appropriate flags here...
+# -g -O1   # your appropriate flags here...
+FFLAGS_DEBUG = %FFLAGS_DEBUG%
 
 # The atom.f code is very vulnerable. Particularly the Intel compiler
 # will make an erroneous compilation of atom.f with high optimization
