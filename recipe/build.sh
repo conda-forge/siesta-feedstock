@@ -10,7 +10,11 @@ cd Obj
 ../Src/obj_setup.sh
 
 # In 4.0 we do not use OpenMP!
-repl="s:%CC%:$GCC:g"
+if [[ -n "$GCC" ]]; then
+    repl="s:%CC%:$GCC:g"
+else
+    repl="s:%CC%:$CC:g"
+fi
 repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
 if [[ -n "$GCC_AR" ]]; then
     repl="$repl;s:%AR%:$GCC_AR:g"
