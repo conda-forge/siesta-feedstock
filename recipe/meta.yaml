@@ -24,12 +24,15 @@ requirements:
     - {{ compiler('c') }}
   host:
     - {{ blas_impl }}
+    - liblapack
     - {{ mpi }}
     - netcdf-fortran
     - scalapack
   run:
     - ssh
+    - libblas * *{{ blas_impl }}
     - {{ blas_impl }}
+    - liblapack
     - {{ mpi }}
     - netcdf-fortran
     - scalapack
