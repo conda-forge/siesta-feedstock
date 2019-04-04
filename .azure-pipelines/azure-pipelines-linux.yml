@@ -10,11 +10,23 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      linux_mpimpich:
-        CONFIG: linux_mpimpich
+      linux_blas_implblismpimpich:
+        CONFIG: linux_blas_implblismpimpich
         UPLOAD_PACKAGES: True
-      linux_mpiopenmpi:
-        CONFIG: linux_mpiopenmpi
+      linux_blas_implblismpiopenmpi:
+        CONFIG: linux_blas_implblismpiopenmpi
+        UPLOAD_PACKAGES: True
+      linux_blas_implmklmpimpich:
+        CONFIG: linux_blas_implmklmpimpich
+        UPLOAD_PACKAGES: True
+      linux_blas_implmklmpiopenmpi:
+        CONFIG: linux_blas_implmklmpiopenmpi
+        UPLOAD_PACKAGES: True
+      linux_blas_implopenblasmpimpich:
+        CONFIG: linux_blas_implopenblasmpimpich
+        UPLOAD_PACKAGES: True
+      linux_blas_implopenblasmpiopenmpi:
+        CONFIG: linux_blas_implopenblasmpiopenmpi
         UPLOAD_PACKAGES: True
   steps:
   - script: |

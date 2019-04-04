@@ -10,11 +10,23 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_mpimpich:
-        CONFIG: osx_mpimpich
+      osx_blas_implblismpimpich:
+        CONFIG: osx_blas_implblismpimpich
         UPLOAD_PACKAGES: True
-      osx_mpiopenmpi:
-        CONFIG: osx_mpiopenmpi
+      osx_blas_implblismpiopenmpi:
+        CONFIG: osx_blas_implblismpiopenmpi
+        UPLOAD_PACKAGES: True
+      osx_blas_implmklmpimpich:
+        CONFIG: osx_blas_implmklmpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implmklmpiopenmpi:
+        CONFIG: osx_blas_implmklmpiopenmpi
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasmpimpich:
+        CONFIG: osx_blas_implopenblasmpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasmpiopenmpi:
+        CONFIG: osx_blas_implopenblasmpiopenmpi
         UPLOAD_PACKAGES: True
 
   steps:
