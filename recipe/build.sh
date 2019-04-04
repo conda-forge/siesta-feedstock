@@ -12,8 +12,16 @@ cd Obj
 # In 4.0 we do not use OpenMP!
 repl="s:%CC%:$GCC:g"
 repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
-repl="$repl;s:%AR%:$GCC_AR:g"
-repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
+if [[ -n "$GCC_AR" ]]; then
+    repl="$repl;s:%AR%:$GCC_AR:g"
+else
+    repl="$repl;s:%AR%:$AR:g"
+fi
+if [[ -n "$GCC_RANLIB" ]]; then
+    repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
+else
+    repl="$repl;s:%RANLIB%:$RANLIB:g"
+fi
 repl="$repl;s:%FC%:$FC:g"
 repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
 repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
