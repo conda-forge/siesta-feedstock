@@ -30,6 +30,8 @@ function mkcp {
 
 # First make a few of the libraries to check that they work!
 make libxmlparser.a
+# Try and build FoX to catch any debugs
+make FoX/.config || cat FoX/config.log
 
 mkcp siesta
 mkcp transiesta
