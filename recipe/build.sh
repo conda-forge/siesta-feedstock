@@ -1,19 +1,19 @@
 #!/bin/bash
 
-echo "ENV"
-env
-echo "ENV"
-
-
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
+
+echo "Runing with mpi=$mpi and blas=$blas_impl"
 
 # Use the default utilities, for now.
 cd Obj
 ../Src/obj_setup.sh
 
-
-cp $RECIPE_DIR/arch.make.MPI arch.make
+if [[ "$mpi" == "nompi" ]]; then
+    cp $RECIPE_DIR/arch.make.SEQ arch.make
+else
+    cp $RECIPE_DIR/arch.make.MPI arch.make
+fi
 
 function mkcp {
     local target=$1
@@ -29,7 +29,7 @@ function mkcp {
 }
 
 # First make a few of the libraries to check that they work!
-make libxmlparser.a libfdf.a
+make libxmlparser.a
 
 mkcp siesta
 mkcp transiesta
