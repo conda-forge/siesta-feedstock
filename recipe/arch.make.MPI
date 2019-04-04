@@ -22,6 +22,7 @@ FC = mpifort
 FC_SERIAL = %FC%
 FPP := $(FC_SERIAL) -E -P -x c
 
+CFLAGS = %CFLAGS%
 FFLAGS = %FFLAGS%
 
 AR = %AR%
@@ -39,6 +40,8 @@ FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
 
 LIBS = -lscalapack -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
+
+LDFLAGS =
 
 MPI_INTERFACE=libmpi_f90.a
 MPI_INCLUDE=.

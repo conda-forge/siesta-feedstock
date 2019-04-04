@@ -32,6 +32,7 @@ function mkcp {
 	exe=$1
 	shift
     fi
+    echo "RUNNING: make $target"
     make $target
     cp $target $PREFIX/bin/$exe
     make clean
