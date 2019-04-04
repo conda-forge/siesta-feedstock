@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "Running tests"
@@ -26,6 +26,9 @@ pushd h2o
 cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
-mpirun siesta < h2o.fdf > h2o.out
+if [[ "$mpi" == "nompi" ]]; then
+    siesta < h2o.fdf > h2o.out
+else
+    mpirun siesta < h2o.fdf > h2o.out
+fi
 popd
-

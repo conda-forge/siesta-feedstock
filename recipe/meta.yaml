@@ -3,7 +3,6 @@
 {% set version = "4.0.2" %}
 {% set md5 = "5f6d1c2ffb96c58bb45c5d76b6bb4bb2" %}
 {% set sha256 = "bafbda19358f0c1dd39bb1253c92ee548791a1c0f648977051d2657216874f7e" %}
-{% set blas_variant = "openblas" %}
 
 package:
   name: {{ name }}
@@ -15,29 +14,51 @@ source:
   md5: {{ md5 }}
   sha256: {{ sha256 }}
 
+# Default build version to be stepped with every new build!
+{% set build = 4 %}
+
+# Define build matrix for MPI vs. non-mpi
+## ensure mpi is defined (needed for conda-smithy recipe-lint)
+{% set mpi = mpi or 'nompi' %}
+{% if mpi == 'nompi' %}
+# prioritize nompi variant via build number
+{% set build = build + 1000 %}
+{% endif %}
+
 build:
-  number: 2
+  number: {{ build }}
   skip: true  # [win]
-  features:
-    - blas_{{ blas_variant }}
+
+  {% if mpi != 'nompi' %}
+  {% set mpi_prefix = "mpi_" + mpi %}
+  {% else %}
+  {% set mpi_prefix = "nompi" %}
+  {% endif %}
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+
+  {% if mpi != 'nompi' %}
+  run_exports:
+    - {{ name }} * {{ mpi_prefix }}_*
+  {% endif %}
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - {{ mpi }}
-    - blas 1.1 {{ blas_variant }}
-    - openblas
+    - {{ blas_impl }}
+    - liblapack
+    - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - scalapack
+    - scalapack  # [mpi != 'nompi']
   run:
     - ssh
-    - {{ mpi }}
-    - blas 1.1 {{ blas_variant }}
-    - openblas
+    - libblas * *{{ blas_impl }}
+    - {{ blas_impl }}
+    - liblapack
+    - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - scalapack
+    - scalapack  # [mpi != 'nompi']
 
 test:
   source_files:
