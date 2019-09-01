@@ -1,7 +1,5 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
-blas_impl:
-- mkl
 c_compiler:
 - clang
 c_compiler_version:
@@ -21,7 +19,7 @@ macos_machine:
 macos_min_version:
 - '10.9'
 mpi:
-- mpich
+- nompi
 netcdf_fortran:
 - '4.4'
 pin_run_as_build:
