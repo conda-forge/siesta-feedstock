@@ -51,7 +51,6 @@ requirements:
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
-    - ssh
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
