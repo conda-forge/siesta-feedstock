@@ -10,59 +10,23 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_blas_implblisfortran_compiler_version4mpimpich:
-        CONFIG: osx_blas_implblisfortran_compiler_version4mpimpich
+      osx_fortran_compiler_version4mpimpich:
+        CONFIG: osx_fortran_compiler_version4mpimpich
         UPLOAD_PACKAGES: True
-      osx_blas_implblisfortran_compiler_version4mpinompi:
-        CONFIG: osx_blas_implblisfortran_compiler_version4mpinompi
+      osx_fortran_compiler_version4mpinompi:
+        CONFIG: osx_fortran_compiler_version4mpinompi
         UPLOAD_PACKAGES: True
-      osx_blas_implblisfortran_compiler_version4mpiopenmpi:
-        CONFIG: osx_blas_implblisfortran_compiler_version4mpiopenmpi
+      osx_fortran_compiler_version4mpiopenmpi:
+        CONFIG: osx_fortran_compiler_version4mpiopenmpi
         UPLOAD_PACKAGES: True
-      osx_blas_implblisfortran_compiler_version7mpimpich:
-        CONFIG: osx_blas_implblisfortran_compiler_version7mpimpich
+      osx_fortran_compiler_version7mpimpich:
+        CONFIG: osx_fortran_compiler_version7mpimpich
         UPLOAD_PACKAGES: True
-      osx_blas_implblisfortran_compiler_version7mpinompi:
-        CONFIG: osx_blas_implblisfortran_compiler_version7mpinompi
+      osx_fortran_compiler_version7mpinompi:
+        CONFIG: osx_fortran_compiler_version7mpinompi
         UPLOAD_PACKAGES: True
-      osx_blas_implblisfortran_compiler_version7mpiopenmpi:
-        CONFIG: osx_blas_implblisfortran_compiler_version7mpiopenmpi
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version4mpimpich:
-        CONFIG: osx_blas_implmklfortran_compiler_version4mpimpich
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version4mpinompi:
-        CONFIG: osx_blas_implmklfortran_compiler_version4mpinompi
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version4mpiopenmpi:
-        CONFIG: osx_blas_implmklfortran_compiler_version4mpiopenmpi
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version7mpimpich:
-        CONFIG: osx_blas_implmklfortran_compiler_version7mpimpich
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version7mpinompi:
-        CONFIG: osx_blas_implmklfortran_compiler_version7mpinompi
-        UPLOAD_PACKAGES: True
-      osx_blas_implmklfortran_compiler_version7mpiopenmpi:
-        CONFIG: osx_blas_implmklfortran_compiler_version7mpiopenmpi
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version4mpimpich:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpimpich
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version4mpinompi:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpinompi
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version4mpiopenmpi:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpiopenmpi
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version7mpimpich:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpimpich
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version7mpinompi:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpinompi
-        UPLOAD_PACKAGES: True
-      osx_blas_implopenblasfortran_compiler_version7mpiopenmpi:
-        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpiopenmpi
+      osx_fortran_compiler_version7mpiopenmpi:
+        CONFIG: osx_fortran_compiler_version7mpiopenmpi
         UPLOAD_PACKAGES: True
 
   steps:
