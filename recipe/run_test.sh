@@ -28,6 +28,9 @@ cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
 pwd
+echo "<<< LDD"
+ldd $(which siesta)
+echo "<<< END LDD"
 if [[ "$mpi" == "nompi" ]]; then
     siesta < h2o.fdf > h2o.out
 else

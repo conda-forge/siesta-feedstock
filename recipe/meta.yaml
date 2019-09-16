@@ -56,9 +56,9 @@ requirements:
   run:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
-    - {{ pin_compatible('hdf5') }}
-    - {{ pin_compatible('libnetcdf') }}
-    - {{ pin_compatible('netcdf-fortran') }}
+    - hdf5
+    - libnetcdf
+    - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
 
 test:
