@@ -69,7 +69,14 @@ make libxmlparser.a
 make FoX/.config || cat FoX/config.log
 
 mkcp siesta
+echo "<<< Showing compinfo.F90"
+cat compinfo.F90
+echo "<<< compinfo.F90 done"
+# Copy cmp
 mkcp transiesta
+echo "<<< Showing compinfo.F90"
+cat compinfo.F90
+echo "<<< compinfo.F90 done"
 
 cd ../Util/Bands
 mkcp eigfat2plot
