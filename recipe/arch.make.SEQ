@@ -39,7 +39,7 @@ COMP_LIBS =
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF
 
 LIBS = -llapack -lblas
-LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
+LIBS += -l:libnetcdff.so -l:libnetcdf.so -l:libhdf5.so -lz
 
 LDFLAGS = %LDFLAGS%
 

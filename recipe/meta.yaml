@@ -49,10 +49,14 @@ requirements:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
+    - hdf5
+    - libnetcdf
     - scalapack  # [mpi != 'nompi']
   run:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
+    - hdf5
+    - libnetcdf
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
 
