@@ -24,6 +24,7 @@ FPP := $(FC_SERIAL) -E -P -x c
 
 CFLAGS = %CFLAGS%
 FFLAGS = %FFLAGS%
+FFLAGS = -g -fbacktrace -Og
 
 AR = %AR%
 RANLIB = %RANLIB%
@@ -47,6 +48,7 @@ LDFLAGS = %LDFLAGS%
 
 # -g -O1   # your appropriate flags here...
 FFLAGS_DEBUG = %FFLAGS_DEBUG%
+FFLAGS_DEBUG = $(FFLAGS)
 
 # The atom.f code is very vulnerable. Particularly the Intel compiler
 # will make an erroneous compilation of atom.f with high optimization

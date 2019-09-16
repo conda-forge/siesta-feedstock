@@ -64,6 +64,9 @@ requirements:
 test:
   source_files:
     - Tests/**
+  command:
+    - conda inspect linkages -p $PREFIX siesta
+    - conda inspect objects -p $PREFIX siesta
 
 about:
   home: https://launchpad.net/siesta/
