@@ -64,7 +64,7 @@ requirements:
 test:
   source_files:
     - Tests/**
-  command:
+  commands:
     - conda inspect linkages -p $PREFIX siesta
     - conda inspect objects -p $PREFIX siesta
 
