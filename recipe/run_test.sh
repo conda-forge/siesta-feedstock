@@ -23,9 +23,11 @@ export OMPI_MCA_rmaps_base_oversubscribe=yes
 mkdir h2o
 
 pushd h2o
+echo "Running h2o"
 cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
+pwd
 if [[ "$mpi" == "nompi" ]]; then
     siesta < h2o.fdf > h2o.out
 else

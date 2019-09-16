@@ -39,6 +39,10 @@ else
     sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
 fi
 
+echo "<<< Showing arch.make"
+cat arch.make
+echo "<<< arch.make done"
+
 function mkcp {
     local target=$1
     shift
