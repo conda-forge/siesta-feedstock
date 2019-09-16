@@ -43,10 +43,11 @@ build:
 
 requirements:
   build:
-    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ compiler('fortran') }}
     - conda-verify
   host:
+    - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - hdf5
@@ -54,6 +55,7 @@ requirements:
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
+    - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - hdf5
