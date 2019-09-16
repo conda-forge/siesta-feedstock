@@ -10,32 +10,59 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_blas_implblismpimpich:
-        CONFIG: osx_blas_implblismpimpich
+      osx_blas_implblisfortran_compiler_version4mpimpich:
+        CONFIG: osx_blas_implblisfortran_compiler_version4mpimpich
         UPLOAD_PACKAGES: True
-      osx_blas_implblismpinompi:
-        CONFIG: osx_blas_implblismpinompi
+      osx_blas_implblisfortran_compiler_version4mpinompi:
+        CONFIG: osx_blas_implblisfortran_compiler_version4mpinompi
         UPLOAD_PACKAGES: True
-      osx_blas_implblismpiopenmpi:
-        CONFIG: osx_blas_implblismpiopenmpi
+      osx_blas_implblisfortran_compiler_version4mpiopenmpi:
+        CONFIG: osx_blas_implblisfortran_compiler_version4mpiopenmpi
         UPLOAD_PACKAGES: True
-      osx_blas_implmklmpimpich:
-        CONFIG: osx_blas_implmklmpimpich
+      osx_blas_implblisfortran_compiler_version7mpimpich:
+        CONFIG: osx_blas_implblisfortran_compiler_version7mpimpich
         UPLOAD_PACKAGES: True
-      osx_blas_implmklmpinompi:
-        CONFIG: osx_blas_implmklmpinompi
+      osx_blas_implblisfortran_compiler_version7mpinompi:
+        CONFIG: osx_blas_implblisfortran_compiler_version7mpinompi
         UPLOAD_PACKAGES: True
-      osx_blas_implmklmpiopenmpi:
-        CONFIG: osx_blas_implmklmpiopenmpi
+      osx_blas_implblisfortran_compiler_version7mpiopenmpi:
+        CONFIG: osx_blas_implblisfortran_compiler_version7mpiopenmpi
         UPLOAD_PACKAGES: True
-      osx_blas_implopenblasmpimpich:
-        CONFIG: osx_blas_implopenblasmpimpich
+      osx_blas_implmklfortran_compiler_version4mpimpich:
+        CONFIG: osx_blas_implmklfortran_compiler_version4mpimpich
         UPLOAD_PACKAGES: True
-      osx_blas_implopenblasmpinompi:
-        CONFIG: osx_blas_implopenblasmpinompi
+      osx_blas_implmklfortran_compiler_version4mpinompi:
+        CONFIG: osx_blas_implmklfortran_compiler_version4mpinompi
         UPLOAD_PACKAGES: True
-      osx_blas_implopenblasmpiopenmpi:
-        CONFIG: osx_blas_implopenblasmpiopenmpi
+      osx_blas_implmklfortran_compiler_version4mpiopenmpi:
+        CONFIG: osx_blas_implmklfortran_compiler_version4mpiopenmpi
+        UPLOAD_PACKAGES: True
+      osx_blas_implmklfortran_compiler_version7mpimpich:
+        CONFIG: osx_blas_implmklfortran_compiler_version7mpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implmklfortran_compiler_version7mpinompi:
+        CONFIG: osx_blas_implmklfortran_compiler_version7mpinompi
+        UPLOAD_PACKAGES: True
+      osx_blas_implmklfortran_compiler_version7mpiopenmpi:
+        CONFIG: osx_blas_implmklfortran_compiler_version7mpiopenmpi
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version4mpimpich:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version4mpinompi:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpinompi
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version4mpiopenmpi:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version4mpiopenmpi
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version7mpimpich:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpimpich
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version7mpinompi:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpinompi
+        UPLOAD_PACKAGES: True
+      osx_blas_implopenblasfortran_compiler_version7mpiopenmpi:
+        CONFIG: osx_blas_implopenblasfortran_compiler_version7mpiopenmpi
         UPLOAD_PACKAGES: True
 
   steps:
@@ -59,7 +86,7 @@ jobs:
 
   - script: |
       source activate base
-      conda install -n base -c conda-forge --quiet --yes conda-forge-ci-setup=2 conda-build shyaml
+      conda install -n base -c conda-forge --quiet --yes conda-forge-ci-setup=2 conda-build
     displayName: 'Add conda-forge-ci-setup=2'
 
   - script: |
@@ -67,7 +94,7 @@ jobs:
       echo "Configuring conda."
 
       setup_conda_rc ./ ./recipe ./.ci_support/${CONFIG}.yaml
-
+      export CI=azure
       source run_conda_forge_build_setup
       conda update --yes --quiet --override-channels -c conda-forge -c defaults --all
     env: {
@@ -92,6 +119,7 @@ jobs:
 
   - script: |
       source activate base
+      export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
       upload_package ./ ./recipe ./.ci_support/${CONFIG}.yaml
     displayName: Upload recipe
     env:
