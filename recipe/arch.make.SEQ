@@ -24,7 +24,7 @@ FPP := $(FC_SERIAL) -E -P -x c
 
 CFLAGS = %CFLAGS%
 FFLAGS = %FFLAGS%
-FFLAGS = -g -fbacktrace -Og
+FFLAGS = -g -fbacktrace -Og -I$PREFIX/include -fdebug-prefix-map=$SRC_DIR=/usr/local/src/conda/siesta-4.0.2 -fdebug-prefix-map=$PREFIX=/usr/local/src/conda-prefix
 
 AR = %AR%
 RANLIB = %RANLIB%
@@ -48,7 +48,7 @@ LDFLAGS = %LDFLAGS%
 
 # -g -O1   # your appropriate flags here...
 FFLAGS_DEBUG = %FFLAGS_DEBUG%
-FFLAGS_DEBUG = $(FFLAGS)
+FFLAGS_DEBUG = $(FFLAGS) -I$PREFIX/include -fdebug-prefix-map=$SRC_DIR=/usr/local/src/conda/siesta-4.0.2 -fdebug-prefix-map=$PREFIX=/usr/local/src/conda-prefix
 
 # The atom.f code is very vulnerable. Particularly the Intel compiler
 # will make an erroneous compilation of atom.f with high optimization

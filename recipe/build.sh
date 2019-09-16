@@ -3,7 +3,10 @@
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 
-echo "Runing with mpi=$mpi and blas=$blas_impl"
+echo "Runing with mpi=$mpi"
+echo "GCC version"
+$GFORTRAN --version
+
 
 # Use the default utilities, for now.
 cd Obj
