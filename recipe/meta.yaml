@@ -45,12 +45,13 @@ requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - conda-verify
   host:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
-    - netcdf-fortran
     - hdf5
     - libnetcdf
+    - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
     - liblapack

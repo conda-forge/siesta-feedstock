@@ -53,6 +53,9 @@ function mkcp {
     fi
     echo "RUNNING: make $target"
     make $target
+    echo "<< ldd $target"
+    ldd $target
+    echo "<< ldd $target done"
     cp $target $PREFIX/bin/$exe
     make clean
 }
