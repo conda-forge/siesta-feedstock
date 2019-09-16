@@ -54,7 +54,6 @@ requirements:
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
-    - ssh
     - libblas * *{{ blas_impl }}
     - {{ blas_impl }}
     - liblapack
