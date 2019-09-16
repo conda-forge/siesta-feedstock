@@ -48,14 +48,11 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
-    - libblas * *{{ blas_impl }}
-    - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
