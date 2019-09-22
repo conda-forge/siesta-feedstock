@@ -26,9 +26,15 @@ pushd h2o
 cp ../Tests/Pseudos/H.psf .
 cp ../Tests/Pseudos/O.psf .
 cp ../Tests/h2o/h2o.fdf .
+
+ls -l
+
 if [[ "$mpi" == "nompi" ]]; then
     siesta < h2o.fdf > h2o.out
 else
     mpirun siesta < h2o.fdf > h2o.out
 fi
+
+ls -l
+
 popd
