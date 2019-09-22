@@ -109,3 +109,8 @@ mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
 #mkcp wfsnc2fsx
+
+cd $SRC_DIR/Obj
+echo "======="
+cat compinfo.F90
+echo "======="
