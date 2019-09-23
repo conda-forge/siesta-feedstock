@@ -1,0 +1,46 @@
+--- a/Src/version.F90
++++ b/Src/version.F90
+@@ -1,4 +1,4 @@
+-! 
++!
+ ! Copyright (C) 1996-2016	The SIESTA group
+ !  This file is distributed under the terms of the
+ !  GNU General Public License: see COPYING in the top directory
+@@ -56,23 +56,23 @@
+ use version_info
+ implicit none
+ 
+-write(6,'(2a)') "Siesta Version  : ", trim(version_str)
+-write(6,'(2a)') 'Architecture    : ', siesta_arch
+-write(6,'(2a)') 'Compiler version: ', compiler_version
+-write(6,'(2a)') 'Compiler flags  : ', fflags
+-write(6,'(2a)') 'PP flags        : ', fppflags
++write(6,'(2A)') "Siesta Version  : ", trim(version_str)
++write(6,'(2A)') "Architecture    : ", siesta_arch
++write(6,'(2A)') "Compiler version: ", compiler_version
++write(6,'(2A)') "Compiler flags  : ", fflags
++write(6,'(2A)') "PP flags        : ", fppflags
+ 
+ #ifdef MPI
+-write(6,'(a)') 'PARALLEL version'
++write(6,'(A)') "PARALLEL version"
+ #else
+-write(6,'(a)') 'SERIAL version'
++write(6,'(A)') "SERIAL version"
+ #endif
+ 
+ #ifdef TRANSIESTA
+-write(6,'(a)') 'TRANSIESTA support'
++write(6,'(A)') "TRANSIESTA support"
+ #endif
+ #ifdef CDF
+-write(6,'(a)') 'NetCDF support'
++write(6,'(A)') "NetCDF support"
+ #endif
+ 
+ end subroutine prversion
+@@ -84,4 +84,3 @@
+   integer, intent(out)  :: v(3)
+   v = num_version
+ end subroutine get_version
+-
