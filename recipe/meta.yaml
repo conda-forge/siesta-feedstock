@@ -13,6 +13,8 @@ source:
   url: https://launchpad.net/{{ name }}/{{ version_base }}/{{ version }}/+download/{{ name }}-{{ version }}.tar.gz
   md5: {{ md5 }}
   sha256: {{ sha256 }}
+  patches:
+    - 0000-version.F90.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 5 %}
