@@ -15,9 +15,9 @@
 -write(6,'(2a)') 'Compiler version: ', compiler_version
 -write(6,'(2a)') 'Compiler flags  : ', fflags
 -write(6,'(2a)') 'PP flags        : ', fppflags
-+write(6,'(2A)') "Siesta Version  : ", trim(version_str)
-+write(6,'(2A)') "Architecture    : ", siesta_arch
-+write(6,'(2A)') "Compiler version: ", compiler_version
++! write(6,'(2A)') "Siesta Version  : ", trim(version_str)
++! write(6,'(2A)') "Architecture    : ", siesta_arch
++! write(6,'(2A)') "Compiler version: ", compiler_version
 +write(6,'(2A)') "Compiler flags  : ", fflags
 +write(6,'(2A)') "PP flags        : ", fppflags
  
