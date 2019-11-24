@@ -15,7 +15,7 @@ source:
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
-{% set build = 4 %}
+{% set build = 5 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -49,23 +49,34 @@ requirements:
     - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
+    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
+    - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
+    - netcdf-fortran * {{ mpi_prefix }}_*
     - scalapack  # [mpi != 'nompi']
+    - zlib
   run:
-    - ssh
+    - openssh
     - libblas * *{{ blas_impl }}
     - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
-    - netcdf-fortran
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf * {{ mpi_prefix }}_*
+    - netcdf-fortran * {{ mpi_prefix }}_*
     - scalapack  # [mpi != 'nompi']
+    - zlib
 
 test:
   source_files:
     - Tests/**
 
 about:
-  home: https://launchpad.net/siesta/
+  home: https://www.uam.es/siesta
   license: GPL-3
   license_family: GPL
   license_file: COPYING
@@ -80,10 +91,11 @@ about:
     that its accuracy and cost can be tuned in a wide range, from quick
     exploratory calculations to highly accurate simulations matching the
     quality of other approaches, such as plane-wave and all-electron methods.
-  doc_url: https://launchpad.net/siesta/{{ version_base }}/{{ version }}/+download/siesta.pdf
-  dev_url: https://launchpad.net/siesta/
+  doc_url: https://departments.icmab.es/leem/siesta/Documentation/index.html
+  dev_url: https://gitlab.com/siesta-project/siesta
 
 extra:
   recipe-maintainers:
     - zerothi
     - albgar
+    - xylar
