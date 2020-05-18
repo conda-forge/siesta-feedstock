@@ -45,7 +45,7 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - {{ blas_impl }}
+    - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - libnetcdf
@@ -54,9 +54,6 @@ requirements:
     - scalapack  # [mpi != 'nompi']
   run:
     - libssh2
-    - libblas * *{{ blas_impl }}
-    - {{ blas_impl }}
-    - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - libnetcdf
     - netcdf-fortran
