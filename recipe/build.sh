@@ -59,7 +59,7 @@ make libxmlparser.a
 # make FoX/.config || cat FoX/config.log
 
 mkcp siesta
-make clean-transiesta
+# make clean-transiesta
 mkcp transiesta
 
 cd ../Util/Bands
@@ -79,23 +79,23 @@ mkcp Eig2DOS
 # Apparently the NetCDF module can *only* be found in Siesta compilation
 #    ???
 #cd ../Gen-basis
-#mkcp gen-basis
-#mkcp ioncat
+# mkcp gen-basis
+# mkcp ioncat
 
 cd ../Grid
 mkcp grid2cube
-#mkcp cdf2xsf
-#mkcp cdf2grid
+# mkcp cdf2xsf
+# mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
-# cd ../TBTrans_rep
-# mkcp tbtrans
+cd ../TS/TBtrans
+mkcp tbtrans
 
 # cd ../TBTrans
 # mkcp tbtrans tbtrans_old
 
-cd ../Vibra/Src
+cd ../../Vibra/Src
 mkcp fcbuild
 mkcp vibra
 
@@ -109,4 +109,4 @@ mkcp readwfx
 mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-#mkcp wfsnc2fsx
+# mkcp wfsnc2fsx
