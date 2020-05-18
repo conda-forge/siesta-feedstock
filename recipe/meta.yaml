@@ -59,7 +59,6 @@ requirements:
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
   run:
-    - libssh2
     - {{ mpi }}  # [mpi != 'nompi']
     - zlib
     - fox
