@@ -92,8 +92,8 @@ mkcp grid_supercell
 # cd ../TBTrans_rep
 # mkcp tbtrans
 
-cd ../TBTrans
-mkcp tbtrans tbtrans_old
+# cd ../TBTrans
+# mkcp tbtrans tbtrans_old
 
 cd ../Vibra/Src
 mkcp fcbuild
