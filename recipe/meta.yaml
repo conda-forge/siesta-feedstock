@@ -1,7 +1,6 @@
 {% set name = "siesta" %}
 {% set version_base = "4.0" %}
 {% set version = "4.0.2" %}
-{% set md5 = "5f6d1c2ffb96c58bb45c5d76b6bb4bb2" %}
 {% set sha256 = "bafbda19358f0c1dd39bb1253c92ee548791a1c0f648977051d2657216874f7e" %}
 
 package:
@@ -11,7 +10,6 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://launchpad.net/{{ name }}/{{ version_base }}/{{ version }}/+download/{{ name }}-{{ version }}.tar.gz
-  md5: {{ md5 }}
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
@@ -50,8 +48,12 @@ requirements:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - libnetcdf
+    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
     - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
     - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
@@ -59,8 +61,12 @@ requirements:
     - libssh2
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
-    - libnetcdf
+    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
     - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
     - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
