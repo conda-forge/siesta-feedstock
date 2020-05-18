@@ -45,13 +45,6 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_mpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>linux_mpiopenmpi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
@@ -63,13 +56,6 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_mpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompi" alt="variant">
                 </a>
               </td>
             </tr><tr>
