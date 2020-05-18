@@ -15,7 +15,7 @@ source:
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
-{% set build = 4 %}
+{% set build = 5 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -46,18 +46,19 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
-    - {{ blas_impl }}
+    - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
+    - libnetcdf
+    - fox
     - scalapack  # [mpi != 'nompi']
   run:
-    - ssh
-    - libblas * *{{ blas_impl }}
-    - {{ blas_impl }}
-    - liblapack
+    - libssh2
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
+    - libnetcdf
+    - fox
     - scalapack  # [mpi != 'nompi']
 
 test:
