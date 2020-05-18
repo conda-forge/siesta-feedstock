@@ -4,7 +4,7 @@ set -e
 echo "Running tests"
 ls -l
 
-for cmd in siesta transiesta tbtrans \
+for cmd in siesta transiesta \ # tbtrans \
 		  eigfat2plot gnubands mprop fat \
 		  denchar Eig2DOS \
 		  grid2cube grid_rotate grid_supercell \
