@@ -59,7 +59,7 @@ make libxmlparser.a
 # make FoX/.config || cat FoX/config.log
 
 mkcp siesta
-# make clean-transiesta
+make clean-transiesta
 mkcp transiesta
 
 cd ../Util/Bands
