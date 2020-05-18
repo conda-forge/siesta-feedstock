@@ -49,6 +49,7 @@ requirements:
     - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
+    - libnetcdf
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
   run:
@@ -57,6 +58,7 @@ requirements:
     - {{ blas_impl }}
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
+    - libnetcdf
     - netcdf-fortran
     - scalapack  # [mpi != 'nompi']
 
