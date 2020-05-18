@@ -50,6 +50,7 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - libnetcdf
     - netcdf-fortran
+    - fox
     - scalapack  # [mpi != 'nompi']
   run:
     - libssh2
@@ -59,6 +60,7 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - libnetcdf
     - netcdf-fortran
+    - fox
     - scalapack  # [mpi != 'nompi']
 
 test:
