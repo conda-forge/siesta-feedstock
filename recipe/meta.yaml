@@ -51,6 +51,8 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
     - libnetcdf
+    - hdf5
+    - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
   run:
@@ -58,6 +60,8 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - netcdf-fortran
     - libnetcdf
+    - hdf5
+    - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
 
