@@ -89,8 +89,8 @@ mkcp grid2cube
 mkcp grid_rotate
 mkcp grid_supercell
 
-cd ../TBTrans_rep
-mkcp tbtrans
+# cd ../TBTrans_rep
+# mkcp tbtrans
 
 cd ../TBTrans
 mkcp tbtrans tbtrans_old
