@@ -5,12 +5,12 @@ echo "Running tests"
 ls -l
 
 for cmd in siesta transiesta tbtrans \
- 		  eigfat2plot gnubands mprop fat \
- 		  denchar Eig2DOS \
- 		  grid2cube grid_rotate grid_supercell \
- 		  fcbuild vibra \
- 		  mixps fractional \
- 		  readwf readwfx info_wfsx wfs2wfsx wfsx2wfs
+		  eigfat2plot gnubands mprop fat \
+		  denchar Eig2DOS \
+		  grid2cube grid_rotate grid_supercell \
+		  fcbuild vibra \
+		  mixps fractional \
+		  readwf readwfx info_wfsx wfs2wfsx wfsx2wfs
 do
     command -v $cmd
 done
