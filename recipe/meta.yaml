@@ -1,7 +1,7 @@
 {% set name = "siesta" %}
 {% set siesta_version = "4.1-b4" %}
 {% set version_base = siesta_version.split("-b")[0] %}
-{% set version = version_base + "." + siesta_version.split("-b")[1] %}
+{% set version = version_base + ".0" %}
 {% set sha256 = "19fa19a23adefb9741a436c6b5dbbdc0f57fb66876883f8f9f6695dfe7574fe3" %}
 
 package:
