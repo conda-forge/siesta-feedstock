@@ -6,46 +6,47 @@ jobs:
 - job: linux
   pool:
     vmImage: ubuntu-16.04
-  timeoutInMinutes: 360
   strategy:
-    maxParallel: 8
     matrix:
       linux_blas_implblismpimpich:
         CONFIG: linux_blas_implblismpimpich
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implblismpinompi:
         CONFIG: linux_blas_implblismpinompi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implblismpiopenmpi:
         CONFIG: linux_blas_implblismpiopenmpi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implmklmpimpich:
         CONFIG: linux_blas_implmklmpimpich
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implmklmpinompi:
         CONFIG: linux_blas_implmklmpinompi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implmklmpiopenmpi:
         CONFIG: linux_blas_implmklmpiopenmpi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implopenblasmpimpich:
         CONFIG: linux_blas_implopenblasmpimpich
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implopenblasmpinompi:
         CONFIG: linux_blas_implopenblasmpinompi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
       linux_blas_implopenblasmpiopenmpi:
         CONFIG: linux_blas_implopenblasmpiopenmpi
-        UPLOAD_PACKAGES: True
+        UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
+    maxParallel: 8
+  timeoutInMinutes: 360
+
   steps:
   # configure qemu binfmt-misc running.  This allows us to run docker containers
   # embedded qemu-static
