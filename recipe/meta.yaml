@@ -48,17 +48,30 @@ requirements:
     - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
-    - libnetcdf
-    - netcdf-fortran
+    - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
+    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
+    - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
+    - netcdf-fortran
+    - netcdf-fortran * {{ mpi_prefix }}_*
   run:
-    - libssh2
     - {{ mpi }}  # [mpi != 'nompi']
-    - libnetcdf
-    - netcdf-fortran
+    - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
+    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
+    - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
+    - netcdf-fortran
+    - netcdf-fortran * {{ mpi_prefix }}_*
 
 test:
   source_files:
