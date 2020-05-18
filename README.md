@@ -38,129 +38,45 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_blas_implblismpimpich</td>
+              <td>linux_mpimpich</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implblismpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpich" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_blas_implblismpinompi</td>
+              <td>linux_mpinompi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implblismpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompi" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_blas_implblismpiopenmpi</td>
+              <td>linux_mpiopenmpi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implblismpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpi" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_blas_implmklmpimpich</td>
+              <td>osx_mpimpich</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implmklmpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpich" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_blas_implmklmpinompi</td>
+              <td>osx_mpinompi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implmklmpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompi" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_blas_implmklmpiopenmpi</td>
+              <td>osx_mpiopenmpi</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implmklmpiopenmpi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_blas_implopenblasmpimpich</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implopenblasmpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_blas_implopenblasmpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implopenblasmpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_blas_implopenblasmpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=linux&configuration=linux_blas_implopenblasmpiopenmpi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implblismpimpich</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implblismpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implblismpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implblismpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implblismpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implblismpiopenmpi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implmklmpimpich</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implmklmpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implmklmpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implmklmpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implmklmpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implmklmpiopenmpi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implopenblasmpimpich</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implopenblasmpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implopenblasmpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implopenblasmpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_blas_implopenblasmpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4506&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_blas_implopenblasmpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/siesta-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpi" alt="variant">
                 </a>
               </td>
             </tr>
@@ -173,6 +89,12 @@ Current build status
     <td>Windows</td>
     <td>
       <img src="https://img.shields.io/badge/Windows-disabled-lightgrey.svg" alt="Windows disabled">
+    </td>
+  </tr>
+  <tr>
+    <td>Linux_ppc64le</td>
+    <td>
+      <img src="https://img.shields.io/badge/ppc64le-disabled-lightgrey.svg" alt="ppc64le disabled">
     </td>
   </tr>
 </table>
@@ -220,7 +142,7 @@ A feedstock is made up of a conda recipe (the instructions on what and how to bu
 the package) and the necessary configurations for automatic building using freely
 available continuous integration services. Thanks to the awesome service provided by
 [CircleCI](https://circleci.com/), [AppVeyor](https://www.appveyor.com/)
-and [TravisCI](https://travis-ci.org/) it is possible to build and upload installable
+and [TravisCI](https://travis-ci.com/) it is possible to build and upload installable
 packages to the [conda-forge](https://anaconda.org/conda-forge)
 [Anaconda-Cloud](https://anaconda.org/) channel for Linux, Windows and OSX respectively.
 
