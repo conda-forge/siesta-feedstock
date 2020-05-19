@@ -29,15 +29,17 @@ fi
 repl="$repl;s:%FC%:$FC:g"
 repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
 repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%LDFLAGS%:-Wl,-rpath,$PREFIX/lib -L$PREFIX/lib:g"
-# The below one fails on OSX
-#repl="$repl;s:%LDFLAGS%:-Wl,-rpath,$PREFIX/lib -Wl,-rpath-link,$PREFIX/lib -L$PREFIX/lib:g"
+repl="$repl;s:%INCFLAGS%:-I$PREFIX/include:g"
+repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib:g"
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
 else
     sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
 fi
+echo "<<< arch.make >>>"
+cat arch.make
+echo "<<< arch.make done >>>"
 
 function mkcp {
     local target=$1
@@ -49,6 +51,7 @@ function mkcp {
     fi
     echo "RUNNING: make $target"
     make $target
+    [ -e compinfo.F90 ] && cat compinfo.F90
     cp $target $PREFIX/bin/$exe
     make clean
 }
@@ -56,9 +59,14 @@ function mkcp {
 # First make a few of the libraries to check that they work!
 make libxmlparser.a
 # Try and build FoX to catch any debugs
-make FoX/.config || cat FoX/config.log
+# make FoX/.config || cat FoX/config.log
 
+set -x
+ls -l
+make version
+cat compinfo.F90
 mkcp siesta
+make version
 mkcp transiesta
 
 cd ../Util/Bands
@@ -78,21 +86,20 @@ mkcp Eig2DOS
 # Apparently the NetCDF module can *only* be found in Siesta compilation
 #    ???
 #cd ../Gen-basis
-#mkcp gen-basis
-#mkcp ioncat
+# mkcp gen-basis
+# mkcp ioncat
 
 cd ../Grid
 mkcp grid2cube
-#mkcp cdf2xsf
-#mkcp cdf2grid
+# mkcp cdf2xsf
+# mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
-cd ../TBTrans_rep
-mkcp tbtrans
-
 cd ../TBTrans
 mkcp tbtrans tbtrans_old
+cd ../TBTrans_rep
+mkcp tbtrans
 
 cd ../Vibra/Src
 mkcp fcbuild
@@ -108,4 +115,4 @@ mkcp readwfx
 mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-#mkcp wfsnc2fsx
+# mkcp wfsnc2fsx

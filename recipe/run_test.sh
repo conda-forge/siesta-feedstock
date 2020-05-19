@@ -12,14 +12,19 @@ for cmd in siesta transiesta tbtrans \
 		  mixps fractional \
 		  readwf readwfx info_wfsx wfs2wfsx wfsx2wfs
 do
+    echo "checking cmd = $cmd"
     command -v $cmd
 done
 
+# This is just to ensure it works *better* on lone machines.
+# Users on clusters should do something differently,
+# or unset these.
 export OMPI_MCA_plm=isolated
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export OMPI_MCA_rmaps_base_oversubscribe=yes
 
 # Run H2O system
+echo "Running h2o test"
 mkdir h2o
 
 pushd h2o
@@ -31,4 +36,8 @@ if [[ "$mpi" == "nompi" ]]; then
 else
     mpirun siesta < h2o.fdf > h2o.out
 fi
+echo "TEST START : h2o"
+cat h2o.out
+echo "TEST END : h2o"
+
 popd
