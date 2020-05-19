@@ -1,17 +1,3 @@
-# 
-# Copyright (C) 1996-2016	The SIESTA group
-#  This file is distributed under the terms of the
-#  GNU General Public License: see COPYING in the top directory
-#  or http://www.gnu.org/copyleft/gpl.txt.
-# See Docs/Contributors.txt for a list of contributors.
-#
-#-------------------------------------------------------------------
-# arch.make file for MPI/gfortran compiler.
-# To use this arch.make file you should rename it to
-#   arch.make
-# or make a sym-link.
-# For an explanation of the flags see DOCUMENTED-TEMPLATE.make
-
 .SUFFIXES:
 .SUFFIXES: .f .F .o .c .a .f90 .F90
 
@@ -34,12 +20,14 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-COMP_LIBS =
+COMP_LIBS = libncdf.a libfdict.a
 
-FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DMPI -DSIESTA__MRRR
+FPPFLAGS = -DFC_HAVE_ABORT -DCDF -DNCDF -DNCDF_4 -DMPI -DSIESTA__MRRR
 
 LIBS = -lscalapack -llapack -lblas
-LIBS += -lnetcdff -lnetcdf -lhdf5 -lz
+LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
+
+INCFLAGS = %INCFLAGS%
 
 LDFLAGS = %LDFLAGS%
 

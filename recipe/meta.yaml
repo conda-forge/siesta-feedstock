@@ -2,15 +2,15 @@
 {% set siesta_version = "4.1-b4" %}
 {% set version_base = siesta_version.split("-b")[0] %}
 {% set version = version_base + ".0" %}
-{% set sha256 = "19fa19a23adefb9741a436c6b5dbbdc0f57fb66876883f8f9f6695dfe7574fe3" %}
+{% set sha256 = "e0316067e7cc0df027b66c339e4624d00de9fd606fad1cede791f300ce160c72" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ siesta_version }}.tar.gz
-  url: https://launchpad.net/{{ name }}/{{ version_base }}/{{ siesta_version }}/+download/{{ name }}-{{ siesta_version }}.tar.gz
+  fn: {{ name }}-v{{ siesta_version }}.tar.bz2
+  url: https://gitlab.com/siesta-project/{{ name }}/-/archive/v{{ siesta_version }}/siesta-v{{ siesta_version }}.tar.bz2
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
@@ -24,26 +24,26 @@ source:
 {% set build = build + 1000 %}
 {% endif %}
 
+{% if mpi != 'nompi' %}
+{% set mpi_prefix = "mpi_" + mpi %}
+{% else %}
+{% set mpi_prefix = "nompi" %}
+{% endif %}
+
 build:
   number: {{ build }}
   skip: true  # [win]
 
-  {% if mpi != 'nompi' %}
-  {% set mpi_prefix = "mpi_" + mpi %}
-  {% else %}
-  {% set mpi_prefix = "nompi" %}
-  {% endif %}
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
 
-  {% if mpi != 'nompi' %}
   run_exports:
-    - {{ name }} * {{ mpi_prefix }}_*
-  {% endif %}
+    - {{ name }}
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - make  # [not win]
   host:
     - libblas
     - liblapack
@@ -54,31 +54,26 @@ requirements:
     # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
     # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
     - hdf5
-    - hdf5 * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - hdf5 * {{ mpi_prefix }}_*
     - libnetcdf
-    - libnetcdf * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
-    - netcdf-fortran * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - netcdf-fortran * {{ mpi_prefix }}_*
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - zlib
     - fox
     - scalapack  # [mpi != 'nompi']
-    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
-    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
-    - hdf5
-    - hdf5 * {{ mpi_prefix }}_*  # [mpi != 'nompi']
-    - libnetcdf
-    - libnetcdf * {{ mpi_prefix }}_*  # [mpi != 'nompi']
-    - netcdf-fortran
-    - netcdf-fortran * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - hdf5 * {{ mpi_prefix }}_*
+    - libnetcdf * {{ mpi_prefix }}_*
+    - netcdf-fortran * {{ mpi_prefix }}_*
 
 test:
   source_files:
     - Tests/**
 
 about:
-  home: https://launchpad.net/siesta/
+  home: https://gitlab.com/siesta-project
   license: GPL-3
   license_family: GPL
   license_file: COPYING
@@ -93,8 +88,7 @@ about:
     that its accuracy and cost can be tuned in a wide range, from quick
     exploratory calculations to highly accurate simulations matching the
     quality of other approaches, such as plane-wave and all-electron methods.
-  doc_url: https://launchpad.net/siesta/{{ version_base }}/{{ version }}/+download/siesta.pdf
-  dev_url: https://launchpad.net/siesta/
+  dev_url: https://gitlab.com/siesta-project/siesta
 
 extra:
   recipe-maintainers:

@@ -11,6 +11,9 @@ jobs:
       osx_mpimpich:
         CONFIG: osx_mpimpich
         UPLOAD_PACKAGES: 'True'
+      osx_mpinompi:
+        CONFIG: osx_mpinompi
+        UPLOAD_PACKAGES: 'True'
       osx_mpiopenmpi:
         CONFIG: osx_mpiopenmpi
         UPLOAD_PACKAGES: 'True'
