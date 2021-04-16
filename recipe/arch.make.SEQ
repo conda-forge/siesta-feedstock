@@ -23,6 +23,7 @@ KINDS = $(SP_KIND) $(DP_KIND)
 COMP_LIBS =
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF
+FPPFLAGS += -DNCDF -DNCDF_4
 
 LIBS = -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz

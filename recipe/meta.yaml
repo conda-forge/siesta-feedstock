@@ -1,22 +1,21 @@
 {% set name = "siesta" %}
-{% set siesta_version = "4.0.2" %}
+{% set siesta_version = "4.1.5" %}
 {% set version = siesta_version.split("-b")[0] %}
-{% set sha256 = "04300ba77a32d0ba2844d704e1c404d1417bd8c1ab76dba9d19f074076d9bc18" %}
+{% set sha256 = "518df31aa6213af5e24cc73abb537b2c89a925b487171f5339d743d0c7140b3f" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-v{{ siesta_version }}.tar.bz2
-  url: https://gitlab.com/siesta-project/{{ name }}/-/archive/v{{ siesta_version }}/siesta-v{{ siesta_version }}.tar.bz2
+  url: https://gitlab.com/siesta-project/{{ name }}/-/releases/v{{ siesta_version }}/downloads/{{ name }}-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
     # make version.o a phony target
     - patches/makefile_conda-clean.patch
 
 # Default build version to be stepped with every new build!
-{% set build = 12 %}
+{% set build = 3 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
