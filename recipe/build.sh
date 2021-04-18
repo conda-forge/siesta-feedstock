@@ -3,11 +3,16 @@
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 
-echo "Runing with mpi=$mpi and blas=$blas_impl"
+echo "Running with mpi=$mpi and blas=$blas_impl"
 
 # Use the default utilities, for now.
 cd Obj
 ../Src/obj_setup.sh
+
+if [[ "$mpi" != "nompi" ]]; then
+    export CFLAGS=${CFLAGS//-fopenmp/}
+    export FFLAGS=${FFLAGS//-fopenmp/}
+fi
 
 if [[ -n "$GCC" ]]; then
     repl="s:%CC%:$GCC:g"
@@ -33,6 +38,12 @@ repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib:g"
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
+    if [[ "$FFLAGS" == *"-fopenmp"* ]]; then
+	{
+	    echo ""
+	    echo "LIBS += -fopenmp"
+	} >> arch.make
+    fi
 else
     sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
 fi
