@@ -20,12 +20,17 @@ SP_KIND = 4
 DP_KIND = 8
 KINDS = $(SP_KIND) $(DP_KIND)
 
-COMP_LIBS =
+COMP_LIBS = libncdf.a libfdict.a
 
 FPPFLAGS = -DFC_HAVE_ABORT -DCDF
+FPPFLAGS += -DNCDF -DNCDF_4
 
 LIBS = -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
+
+# fake-handler for ol-stm
+FFTW_ROOT=.
+NETCDF_LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
 
 INCFLAGS = %INCFLAGS%
 

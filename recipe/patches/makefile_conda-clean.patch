@@ -1,13 +1,8 @@
 diff --git a/Src/Makefile b/Src/Makefile
-index a61b65a8..127d2c9c 100644
+index 2d25c6f25..bd58fa139 100644
 --- a/Src/Makefile
 +++ b/Src/Makefile
-@@ -290,18 +290,25 @@ ifeq ($(COMPILER_VERSION),)
-   COMPILER_VERSION := Unknown version
- endif
- 
-+.PHONY: version version.o
-+version.o: version
+@@ -408,16 +408,19 @@ version.o: version
  version: version.F90
  	@echo
  	@echo "==> Incorporating information about present compilation (compiler and flags)"
@@ -15,18 +10,17 @@ index a61b65a8..127d2c9c 100644
 +	@sed "s'SIESTA_ARCH'${SIESTA_ARCH}'g;s'FFLAGS'$(shell basename ${FC}) ${FFLAGS}'g;\
  		s^COMPILER_VERSION^$(COMPILER_VERSION)^;\
  		s'SIESTA_VERSION'$$(cat ${<D}/../version.info)'g;\
--		s'FPPFLAGS'$(FPPFLAGS) $(DEFS)'g" $<  > tmp.F90
-+		s'FPPFLAGS'$(FPPFLAGS) $(DEFS)'g;s' -fdebug-prefix-map=[^[:space:]\"]*''g;\
-+	        s'-isystem [^[:space:]\"]*''g" $< > tmp.F90
-+	@echo "after sed"
-+	@cat tmp.F90
+ 		s'LIBS'$(COMP_LIBS) $(LIBS)'g;\
+-		s'FPPFLAGS'$(FPPFLAGS)'g" $<  > tmp.F90
++		s'-isystem [^[:space:]\"]*''g;\
++		s' -fdebug-prefix-map=[^[:space:]\"]*''g;\
++		s'FPPFLAGS'$(FPPFLAGS)  $(DEFS)'g" $<  > tmp.F90
  	@awk '{if (length>80) { cur=78; \
  		printf "%s&\n",substr($$0,0,78); \
  		while(length-cur>78){ cur=cur+76 ; \
  		printf "&%s&\n",substr($$0,cur-76,76) \
  		} printf "&%s\n",substr($$0,cur)} else { print $$0 }}' tmp.F90 > compinfo.F90
-+	@echo "after awk"
 +	@cat compinfo.F90
- 	@($(MAKE) "FPPFLAGS=$(FPPFLAGS)" "DEFS=$(DEFS)" compinfo.o)
+ 	$(MAKE) "FPPFLAGS=$(FPPFLAGS)" compinfo.o
  	@mv compinfo.o version.o
  	@echo

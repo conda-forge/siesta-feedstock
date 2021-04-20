@@ -3,19 +3,23 @@
 # Remove __FILE__ lines in utils file.
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 
-echo "Runing with mpi=$mpi and blas=$blas_impl"
+echo "Running with mpi=$mpi and blas=$blas_impl"
 
 # Use the default utilities, for now.
 cd Obj
 ../Src/obj_setup.sh
 
-# In 4.0 we do not use OpenMP!
+if [[ "$mpi" != "nompi" ]]; then
+    export CFLAGS=${CFLAGS//-fopenmp/}
+    export FFLAGS=${FFLAGS//-fopenmp/}
+fi
+
 if [[ -n "$GCC" ]]; then
     repl="s:%CC%:$GCC:g"
 else
     repl="s:%CC%:$CC:g"
 fi
-repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
+repl="$repl;s:%CFLAGS%:$CFLAGS:g"
 if [[ -n "$GCC_AR" ]]; then
     repl="$repl;s:%AR%:$GCC_AR:g"
 else
@@ -27,13 +31,21 @@ else
     repl="$repl;s:%RANLIB%:$RANLIB:g"
 fi
 repl="$repl;s:%FC%:$FC:g"
-repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
+repl="$repl;s:%FFLAGS%:$FFLAGS:g"
+repl="$repl;s:%FFLAGS_DEBUG%:$DEBUG_FFLAGS:g"
 repl="$repl;s:%INCFLAGS%:-I$PREFIX/include:g"
 repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib:g"
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
+    if [[ "$FFLAGS" == *"-fopenmp"* ]]; then
+	{
+	    echo ""
+	    echo "# Append openmp"
+	    echo "LIBS += -fopenmp"
+	    echo "LDFLAGS += -fopenmp"
+	} >> arch.make
+    fi
 else
     sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
 fi
@@ -67,7 +79,6 @@ make version
 cat compinfo.F90
 mkcp siesta
 make version
-mkcp transiesta
 
 cd ../Util/Bands
 mkcp eigfat2plot
@@ -76,6 +87,7 @@ mkcp gnubands
 cd ../COOP
 mkcp mprop
 mkcp fat
+mkcp spin_texture
 
 cd ../Denchar/Src
 mkcp denchar
@@ -91,15 +103,33 @@ mkcp Eig2DOS
 
 cd ../Grid
 mkcp grid2cube
-# mkcp cdf2xsf
-# mkcp cdf2grid
+mkcp cdf2xsf
+mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
-cd ../TBTrans
-mkcp tbtrans tbtrans_old
-cd ../TBTrans_rep
+cd ../Grimme
+mkcp fdf2grimme
+
+cd ../Macroave/Src
+mkcp macroave
+
+cd ../../STM/simple-stm
+mkcp plstm
+mkcp plsts
+
+cd ../ol-stm/Src
+mkcp stm
+
+cd ../../../TS/TBtrans
 mkcp tbtrans
+cd ../ts2ts
+mkcp ts2ts
+cd ../tshs2tshs
+mkcp tshs2tshs
+cd ../
+cp tselecs.sh $PREFIX/bin/tselecs.sh
+chmod u+x $PREFIX/bin/tselecs.sh
 
 cd ../Vibra/Src
 mkcp fcbuild
@@ -112,7 +142,6 @@ mkcp fractional
 cd ../WFS
 mkcp readwf
 mkcp readwfx
-mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-# mkcp wfsnc2fsx
+mkcp wfsnc2wfsx

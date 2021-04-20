@@ -4,13 +4,16 @@ set -e
 echo "Running tests"
 ls -l
 
-for cmd in siesta transiesta tbtrans \
-		  eigfat2plot gnubands mprop fat \
+for cmd in siesta \
+		  eigfat2plot gnubands mprop fat spin_texture \
 		  denchar Eig2DOS \
-		  grid2cube grid_rotate grid_supercell \
+		  grid2cube grid_rotate cdf2xsf cdf2grid grid_rotate grid_supercell \
+		  fdf2grimme macroave \
+		  plstm plsts stm \
+		  tbtrans ts2ts tshs2tshs tselecs.sh \
 		  fcbuild vibra \
 		  mixps fractional \
-		  readwf readwfx info_wfsx wfs2wfsx wfsx2wfs
+		  readwf readwfx wfs2wfsx wfsx2wfs wfsnc2wfsx
 do
     echo "checking cmd = $cmd"
     command -v $cmd
