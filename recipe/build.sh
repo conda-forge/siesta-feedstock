@@ -127,6 +127,7 @@ cd ../tshs2tshs
 mkcp tshs2tshs
 cd ../
 cp tselecs.sh $PREFIX/bin/tselecs.sh
+chmod u+x $PREFIX/bin/tselecs.sh
 
 cd ../Vibra/Src
 mkcp fcbuild
