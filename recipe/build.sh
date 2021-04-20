@@ -41,7 +41,9 @@ if [[ "$mpi" == "nompi" ]]; then
     if [[ "$FFLAGS" == *"-fopenmp"* ]]; then
 	{
 	    echo ""
+	    echo "# Append openmp"
 	    echo "LIBS += -fopenmp"
+	    echo "LDFLAGS += -fopenmp"
 	} >> arch.make
     fi
 else
