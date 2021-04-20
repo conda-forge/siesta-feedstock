@@ -28,6 +28,10 @@ FPPFLAGS += -DNCDF -DNCDF_4
 LIBS = -lscalapack -llapack -lblas
 LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
 
+# fake-handler for ol-stm
+FFTW_ROOT=.
+NETCDF_LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
+
 INCFLAGS = %INCFLAGS%
 
 LDFLAGS = %LDFLAGS%

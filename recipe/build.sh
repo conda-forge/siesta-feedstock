@@ -101,8 +101,8 @@ mkcp Eig2DOS
 
 cd ../Grid
 mkcp grid2cube
-# mkcp cdf2xsf
-# mkcp cdf2grid
+mkcp cdf2xsf
+mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
@@ -112,7 +112,14 @@ mkcp fdf2grimme
 cd ../Macroave/Src
 mkcp macroave
 
-cd ../../TS/TBtrans
+cd ../../STM/simple-stm
+mkcp plstm
+mkcp plsts
+
+cd ../ol-stm/Src
+mkcp stm
+
+cd ../../../TS/TBtrans
 mkcp tbtrans
 cd ../ts2ts
 mkcp ts2ts
@@ -132,7 +139,6 @@ mkcp fractional
 cd ../WFS
 mkcp readwf
 mkcp readwfx
-mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-# mkcp wfsnc2fsx
+mkcp wfsnc2wfsx
