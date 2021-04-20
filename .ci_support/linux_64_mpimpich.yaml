@@ -9,7 +9,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 docker_image:
-- condaforge/linux-anvil-comp7
+- quay.io/condaforge/linux-anvil-comp7
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
@@ -21,9 +21,9 @@ libblas:
 liblapack:
 - 3.8 *netlib
 libnetcdf:
-- 4.7.4
+- 4.8.0
 mpi:
-- openmpi
+- mpich
 netcdf_fortran:
 - '4.5'
 pin_run_as_build:
@@ -36,5 +36,7 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - fortran_compiler_version
+- - cdt_name
+  - docker_image
 zlib:
 - '1.2'
