@@ -13,6 +13,8 @@ source:
   patches:
     # make version.o a phony target
     - patches/makefile_conda-clean.patch
+    # fix compiling ts* utilities in serial case
+    - patches/makefile_ncdf-serial.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 3 %}
