@@ -10,6 +10,8 @@ channel_targets:
 - conda-forge main
 docker_image:
 - quay.io/condaforge/linux-anvil-comp7
+fftw:
+- '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
@@ -27,6 +29,8 @@ mpi:
 netcdf_fortran:
 - '4.5'
 pin_run_as_build:
+  fftw:
+    max_pin: x
   netcdf-fortran:
     max_pin: x.x
   zlib:
