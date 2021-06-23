@@ -122,6 +122,7 @@ cd ../ol-stm/Src
 mkcp stm
 
 cd ../../../TS/TBtrans
+mkcp phtrans
 mkcp tbtrans
 cd ../ts2ts
 mkcp ts2ts
