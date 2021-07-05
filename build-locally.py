@@ -61,12 +61,20 @@ def verify_config(ns):
         raise ValueError(
             f"only Linux/macOS configs currently supported, got {ns.config}"
         )
+<<<<<<< HEAD
     elif ns.config.startswith("osx"):
         if "OSX_SDK_DIR" not in os.environ:
             raise RuntimeError(
                 "Need OSX_SDK_DIR env variable set. Run 'export OSX_SDK_DIR=SDKs' "
                 "to download the SDK automatically to 'SDKs/MacOSX<ver>.sdk'. "
                 "Setting this variable implies agreement to the licensing terms of the SDK by Apple."
+=======
+    elif ns.config.startswith("osx") and platform.system() == "Darwin":
+        if "OSX_SDK_DIR" not in os.environ:
+            raise RuntimeError(
+                "Need OSX_SDK_DIR env variable set. Run 'export OSX_SDK_DIR=/opt'"
+                "to download the SDK automatically to '/opt/MacOSX<ver>.sdk'"
+>>>>>>> 8fcad2c (enh: added phtrans to the binaries (#23))
             )
 
 
@@ -86,6 +94,7 @@ def main(args=None):
     verify_config(ns)
     setup_environment(ns)
 
+<<<<<<< HEAD
     try:
         if ns.config.startswith("linux") or (
             ns.config.startswith("osx") and platform.system() == "Linux"
@@ -99,6 +108,14 @@ def main(args=None):
         )
         if os.path.exists(recipe_license_file):
             os.remove(recipe_license_file)
+=======
+    if ns.config.startswith("linux") or (
+        ns.config.startswith("osx") and platform.system() == "Linux"
+    ):
+        run_docker_build(ns)
+    elif ns.config.startswith("osx"):
+        run_osx_build(ns)
+>>>>>>> 8fcad2c (enh: added phtrans to the binaries (#23))
 
 
 if __name__ == "__main__":

@@ -13,13 +13,21 @@ MINIFORGE_HOME=${MINIFORGE_HOME:-${HOME}/miniforge3}
 MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/latest/download"
 MINIFORGE_FILE="Mambaforge-MacOSX-$(uname -m).sh"
 curl -L -O "${MINIFORGE_URL}/${MINIFORGE_FILE}"
+<<<<<<< HEAD
 rm -rf ${MINIFORGE_HOME}
+=======
+>>>>>>> 8fcad2c (enh: added phtrans to the binaries (#23))
 bash $MINIFORGE_FILE -b -p ${MINIFORGE_HOME}
 
 ( endgroup "Installing a fresh version of Miniforge" ) 2> /dev/null
 
 ( startgroup "Configuring conda" ) 2> /dev/null
 
+<<<<<<< HEAD
+=======
+BUILD_CMD=build
+
+>>>>>>> 8fcad2c (enh: added phtrans to the binaries (#23))
 source ${MINIFORGE_HOME}/etc/profile.d/conda.sh
 conda activate base
 

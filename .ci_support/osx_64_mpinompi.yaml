@@ -8,6 +8,8 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+fftw:
+- '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
@@ -27,9 +29,20 @@ mpi:
 mpich:
 - '4'
 netcdf_fortran:
+<<<<<<< HEAD
 - '4.6'
 openmpi:
 - '4'
+=======
+- '4.5'
+pin_run_as_build:
+  fftw:
+    max_pin: x
+  netcdf-fortran:
+    max_pin: x.x
+  zlib:
+    max_pin: x.x
+>>>>>>> 8fcad2c (enh: added phtrans to the binaries (#23))
 target_platform:
 - osx-64
 zip_keys:

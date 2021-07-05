@@ -188,6 +188,10 @@ Terminology
 Updating siesta-feedstock
 =========================
 
+The Siesta feedstock uses a *multiple branch* scheme were the maintained versions
+of Siesta are equally maintained. We will maintain two major release versions X.Y
+and X.(Y+1), and once X.(Y+2) is release, X.Y will be dropped.
+
 If you would like to improve the siesta recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
