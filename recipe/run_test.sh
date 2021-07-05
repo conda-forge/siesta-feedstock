@@ -10,7 +10,7 @@ for cmd in siesta \
 		  grid2cube grid_rotate cdf2xsf cdf2grid grid_rotate grid_supercell \
 		  fdf2grimme macroave \
 		  plstm plsts stm \
-		  tbtrans ts2ts tshs2tshs tselecs.sh \
+		  phtrans tbtrans ts2ts tshs2tshs tselecs.sh \
 		  fcbuild vibra \
 		  mixps fractional \
 		  readwf readwfx wfs2wfsx wfsx2wfs wfsnc2wfsx
