@@ -3,7 +3,7 @@ About siesta
 
 Home: https://gitlab.com/siesta-project
 
-Package license: GPL-3
+Package license: GPL-3.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/siesta-feedstock/blob/master/LICENSE.txt)
 
@@ -159,10 +159,6 @@ Terminology
 
 Updating siesta-feedstock
 =========================
-
-The Siesta feedstock uses a *multiple branch* scheme were the maintained versions
-of Siesta are equally maintained. We will maintain two major release versions X.Y
-and X.(Y+1), and once X.(Y+2) is release, X.Y will be dropped.
 
 If you would like to improve the siesta recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
