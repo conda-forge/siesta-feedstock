@@ -9,11 +9,15 @@ echo "Running with mpi=$mpi and blas=$blas_impl"
 cd Obj
 ../Src/obj_setup.sh
 
-gcc_version=$(gcc --version | head -1 | awk '{print $3}')
+if [[ -n "$GCC" ]]; then
+    gcc_version=$($GCC --version | head -1 | awk '{print $3}')
+else
+    gcc_version=$($CC --version | head -1 | awk '{print $3}')
+fi
 # Check if we have a gcc version >= 10
 gcc_version=${gcc_version%%\.*}
 if [[ $gcc_version -ge 10 ]]; then
-    FFLAGS="$FFLAGS -fallow-argument-mismatch"
+    export FFLAGS="$FFLAGS -fallow-argument-mismatch"
 fi
 
 if [[ "$mpi" != "nompi" ]]; then
