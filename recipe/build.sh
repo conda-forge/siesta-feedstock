@@ -9,6 +9,13 @@ echo "Running with mpi=$mpi and blas=$blas_impl"
 cd Obj
 ../Src/obj_setup.sh
 
+gcc_version=$(gcc --version | head -1 | awk '{print $3}')
+# Check if we have a gcc version >= 10
+gcc_version=${gcc_version%%\.*}
+if [[ $gcc_version -ge 10 ]]; then
+    FFLAGS="$FFLAGS -fallow-argument-mismatch"
+fi
+
 if [[ "$mpi" != "nompi" ]]; then
     export CFLAGS=${CFLAGS//-fopenmp/}
     export FFLAGS=${FFLAGS//-fopenmp/}
@@ -35,6 +42,7 @@ repl="$repl;s:%FFLAGS%:$FFLAGS:g"
 repl="$repl;s:%FFLAGS_DEBUG%:$DEBUG_FFLAGS:g"
 repl="$repl;s:%INCFLAGS%:-I$PREFIX/include:g"
 repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib:g"
+
 
 if [[ "$mpi" == "nompi" ]]; then
     sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
