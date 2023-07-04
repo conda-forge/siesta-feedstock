@@ -77,7 +77,15 @@ cd ../COOP
 mkcp mprop
 mkcp fat
 
-cd ../Denchar/Src
+cd ../Contrib/APostnikov
+mkcp fmpdos
+mkcp xv2xsf
+mkcp eig2bxsf
+mkcp md2axsf
+mkcp rho2xsf
+mkcp vib2xsf
+
+cd ../../Denchar/Src
 mkcp denchar
 
 cd ../../Eig2DOS
@@ -91,13 +99,23 @@ mkcp Eig2DOS
 
 cd ../Grid
 mkcp grid2cube
-# mkcp cdf2xsf
-# mkcp cdf2grid
+mkcp cdf2xsf
+mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
 
+cd ../HSX
+mkcp hs2hsx
+mkcp hsx2hs
+
+cd ../Optical
+mkcp optical
+mkcp optical_input
+
 cd ../TBTrans
 mkcp tbtrans tbtrans_old
+cd ../ts2ts
+mkcp ts2ts
 cd ../TBTrans_rep
 mkcp tbtrans
 
@@ -115,4 +133,4 @@ mkcp readwfx
 mkcp info_wfsx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
-# mkcp wfsnc2fsx
+mkcp wfsnc2fsx
