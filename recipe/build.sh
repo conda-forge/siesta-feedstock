@@ -9,13 +9,29 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 cd Obj
 ../Src/obj_setup.sh
 
+
+# Get the gcc version
+echo "GCC version string: $(gcc --version | head -1)"
+
 # In 4.0 we do not use OpenMP!
 if [[ -n "$GCC" ]]; then
     repl="s:%CC%:$GCC:g"
+    gcc_version=$($GCC --version | head -1 | awk '{print $NF}')
 else
     repl="s:%CC%:$CC:g"
+    gcc_version=$($CC --version | head -1 | awk '{print $NF}')
 fi
 repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
+
+# Check if we have a gcc version >= 10
+echo "GCC version [1] == $gcc_version"
+gcc_version=${gcc_version%%\.*}
+echo "GCC version [2] == $gcc_version"
+if [[ $gcc_version -ge 10 ]]; then
+    export FFLAGS="$FFLAGS -fallow-argument-mismatch"
+    export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
+fi
+
 if [[ -n "$GCC_AR" ]]; then
     repl="$repl;s:%AR%:$GCC_AR:g"
 else
