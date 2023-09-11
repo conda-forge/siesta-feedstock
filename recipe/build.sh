@@ -24,7 +24,9 @@ else
 fi
 
 # Check if we have a gcc version >= 10
+echo "GCC version [1] == $gcc_version"
 gcc_version=${gcc_version%%\.*}
+echo "GCC version [2] == $gcc_version"
 if [[ $gcc_version -ge 10 ]]; then
     export FFLAGS="$FFLAGS -fallow-argument-mismatch"
     export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
