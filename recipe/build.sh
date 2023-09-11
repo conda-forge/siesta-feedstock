@@ -14,11 +14,22 @@ if [[ "$mpi" != "nompi" ]]; then
     export FFLAGS=${FFLAGS//-fopenmp/}
 fi
 
+# Get the gcc version
 if [[ -n "$GCC" ]]; then
     repl="s:%CC%:$GCC:g"
+    gcc_version=$($GCC --version | head -1 | awk '{print $3}')
 else
     repl="s:%CC%:$CC:g"
+    gcc_version=$($CC --version | head -1 | awk '{print $3}')
 fi
+
+# Check if we have a gcc version >= 10
+gcc_version=${gcc_version%%\.*}
+if [[ $gcc_version -ge 10 ]]; then
+    export FFLAGS="$FFLAGS -fallow-argument-mismatch"
+    export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
+fi
+
 repl="$repl;s:%CFLAGS%:$CFLAGS:g"
 if [[ -n "$GCC_AR" ]]; then
     repl="$repl;s:%AR%:$GCC_AR:g"
