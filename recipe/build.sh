@@ -18,6 +18,8 @@ fi
 gcc_version=${gcc_version%%\.*}
 if [[ $gcc_version -ge 10 ]]; then
     export FFLAGS="$FFLAGS -fallow-argument-mismatch"
+    export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
+
 fi
 
 if [[ "$mpi" != "nompi" ]]; then
