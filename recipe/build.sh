@@ -15,12 +15,13 @@ if [[ "$mpi" != "nompi" ]]; then
 fi
 
 # Get the gcc version
+echo "GCC version string: $(gcc --version | head -1)"
 if [[ -n "$GCC" ]]; then
     repl="s:%CC%:$GCC:g"
-    gcc_version=$($GCC --version | head -1 | awk '{print $3}')
+    gcc_version=$($GCC --version | head -1 | awk '{print $NF}')
 else
     repl="s:%CC%:$CC:g"
-    gcc_version=$($CC --version | head -1 | awk '{print $3}')
+    gcc_version=$($CC --version | head -1 | awk '{print $NF}')
 fi
 
 # Check if we have a gcc version >= 10
