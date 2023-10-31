@@ -25,7 +25,7 @@ repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
 
 # Check if we have a gcc version >= 10
 echo "GCC version [1] == $gcc_version"
-gcc_version=${gcc_version%%\.*}
+gcc_version=${gcc_version%%.*}
 echo "GCC version [2] == $gcc_version"
 if [[ $gcc_version -ge 10 ]]; then
     export FFLAGS="$FFLAGS -fallow-argument-mismatch"
@@ -111,6 +111,10 @@ mkcp grid2cube
 # mkcp cdf2grid
 mkcp grid_rotate
 mkcp grid_supercell
+
+cd ../Optical
+mkcp optical
+mkcp optical_input
 
 cd ../TBTrans
 mkcp tbtrans tbtrans_old
