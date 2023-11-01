@@ -49,7 +49,7 @@ requirements:
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
-    - libxc <6
+    - libxc >6.0
     # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
     # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
     - hdf5
@@ -61,7 +61,7 @@ requirements:
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
-    - libxc <6
+    - libxc >6.0
     - hdf5 * {{ mpi_prefix }}_*
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
