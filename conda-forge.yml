@@ -8,3 +8,8 @@ github:
   tooling_branch_name: main
 conda_build:
   pkg_format: '2'
+bot:
+  abi_migration_branches:
+    - main
+    - v4.1.x
+    # no v4.0.x
