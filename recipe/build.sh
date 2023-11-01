@@ -141,11 +141,11 @@ mkcp hsx2hs
 cd ../Macroave/Src
 mkcp macroave
 
-cd ../Optical
+cd ../../Optical
 mkcp optical
 mkcp optical_input
 
-cd ../../STM/simple-stm
+cd ../STM/simple-stm
 mkcp plstm
 mkcp plsts
 
