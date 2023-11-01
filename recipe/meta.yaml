@@ -17,7 +17,7 @@ source:
     - patches/makefile_ncdf-serial.patch
 
 # Default build version to be stepped with every new build!
-{% set build = 3 %}
+{% set build = 4 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -39,9 +39,6 @@ build:
 
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
 
-  run_exports:
-    - {{ name }}
-
 requirements:
   build:
     - {{ compiler('fortran') }}
@@ -51,8 +48,6 @@ requirements:
     - libblas
     - liblapack
     - {{ mpi }}  # [mpi != 'nompi']
-    - zlib
-    - fox
     - scalapack  # [mpi != 'nompi']
     # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
     # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
@@ -65,8 +60,6 @@ requirements:
     - fftw
   run:
     - {{ mpi }}  # [mpi != 'nompi']
-    - zlib
-    - fox
     - scalapack  # [mpi != 'nompi']
     - hdf5 * {{ mpi_prefix }}_*
     - libnetcdf * {{ mpi_prefix }}_*
