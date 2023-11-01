@@ -9,8 +9,6 @@ echo "Build on uname=$(uname)"
 
 #if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
   # Workaround for https://github.com/conda-forge/scalapack-feedstock/pull/30#issuecomment-1061196317
-  export FFLAGS="$FFLAGS -fallow-argument-mismatch"
-  export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
   export OMPI_FCFLAGS="$FFLAGS"
 #fi
 
@@ -34,11 +32,9 @@ else
 fi
 
 if [[ "$mpi" != "nompi" ]]; then
-  # This is not necessary as the arch.make files
-  # handles this correctly
   echo "passing on setting CC and FC for non-mpi"
-  #export CC=mpicc
-  #export FC=mpifort
+  export CC=mpicc
+  export FC=mpifort
 fi
 
 # Get the version
@@ -52,29 +48,40 @@ if [[ -n "$GCC_RANLIB" ]]; then
 fi
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
-opts=
-opts="$opts -DCMAKE_BUILD_TYPE=Release"
-opts="$opts -DCMAKE_INSTALL_PREFIX=$PREFIX"
-opts="$opts -DCMAKE_INSTALL_LIBDIR=lib"
-
-opts="$opts -DCMAKE_FIND_FRAMEWORK=NEVER"
-opts="$opts -DCMAKE_FIND_APPBUNDLE=NEVER"
-
 if [[ "$mpi" == "nompi" ]]; then
-  opts="$opts -DWITH_MPI=no"
+  MPI=OFF
 else
-  opts="$opts -DWITH_MPI=yes"
+  MPI=ON
 fi
 
-# Add NetCDF
-opts="$opts -DWITH_LIBXC=on"
-opts="$opts -DWITH_NCDF=on"
+cmake_opts=(
+  # Add NetCDF
+  "-DWITH_LIBXC=on"
+  "-DWITH_NCDF=on"
 
-# We will fetch the compatible versions
-opts="$opts -DLIBFDF_FIND_METHOD=fetch"
-opts="$opts -DLIBGRIDXC_FIND_METHOD=fetch"
-opts="$opts -DLIBPSML_FIND_METHOD=fetch"
-opts="$opts -DLIBXMLF90_FIND_METHOD=fetch"
+  # Disable flook
+  "-DWITH_FLOOK=off"
 
-cmake -S. -Bobj_cmake $opts
+  # MPI
+  "-DWITH_MPI=${MPI}"
+
+  # We will fetch the compatible versions
+  "-DLIBFDF_FIND_METHOD=fetch"
+  "-DLIBGRIDXC_FIND_METHOD=fetch"
+  "-DLIBPSML_FIND_METHOD=fetch"
+  "-DXMLF90_FIND_METHOD=fetch"
+
+  "-DCMAKE_BUILD_TYPE=Release"
+  "-DCMAKE_INSTALL_LIBDIR=lib"
+
+  # I don't think these are required.
+  # They are intended to omit linking to direct
+  "-DCMAKE_FIND_FRAMEWORK=NEVER"
+  "-DCMAKE_FIND_APPBUNDLE=NEVER"
+
+  # To not clutter things
+  "-DCMAKE_INSTALL_PREFIX=$PREFIX"
+)
+
+cmake -S. -Bobj_cmake "${cmake_opts[@]}"
 cmake --build obj_cmake --target install
