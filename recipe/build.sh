@@ -89,7 +89,6 @@ function mkcp {
     fi
     echo "RUNNING: make $target"
     make $target
-    [ -e compinfo.F90 ] && cat compinfo.F90
     cp -av $target $PREFIX/bin/$exe
     make clean
 }
