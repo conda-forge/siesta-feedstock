@@ -7,18 +7,19 @@ set -ex
 sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
 
 echo "Runing with mpi=$mpi and blas=$blas_impl"
+echo "Build on target_platform=$target_platform"
+echo "Build on uname=$(uname)"
 
 # Use the default utilities, for now.
 cd Obj
 ../Src/obj_setup.sh
 
-if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
+#if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
   # Workaround for https://github.com/conda-forge/scalapack-feedstock/pull/30#issuecomment-1061196317
-  # As of March 2022, on macOS (Intel) gfortran 9 is still used
   export FFLAGS="$FFLAGS -fallow-argument-mismatch"
   export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
   export OMPI_FCFLAGS="$FFLAGS"
-fi
+#fi
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   # This is only used by open-mpi's mpicc
