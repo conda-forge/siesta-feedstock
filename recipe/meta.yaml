@@ -38,13 +38,11 @@ build:
 
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
 
-  run_exports:
-    - {{ name }}
-
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - openmpi-mpifort  # [mpi == 'openmpi']
     - make  # [not win]
   host:
     - libblas
