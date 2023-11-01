@@ -3,16 +3,9 @@
 # error on faulty execution
 set -ex
 
-# Remove __FILE__ lines in utils file.
-sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
-
 echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
-
-# Use the default utilities, for now.
-cd Obj
-../Src/obj_setup.sh
 
 #if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
   # Workaround for https://github.com/conda-forge/scalapack-feedstock/pull/30#issuecomment-1061196317
@@ -52,107 +45,36 @@ fi
 echo "CC version string: $($CC --version | head -1)"
 
 if [[ -n "$GCC_AR" ]]; then
-    repl="$repl;s:%AR%:$GCC_AR:g"
-else
-    repl="$repl;s:%AR%:$AR:g"
+  export AR=$GCC_AR
 fi
 if [[ -n "$GCC_RANLIB" ]]; then
-    repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
-else
-    repl="$repl;s:%RANLIB%:$RANLIB:g"
+  export RANLIB=$GCC_RANLIB
 fi
-repl="$repl;s:%CC%:$CC:g"
-repl="$repl;s:%FC%:$FC:g"
-# No OpenMP!
-repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
-repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%INCFLAGS%:-I$PREFIX/include:g"
-repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib $LDFLAGS:g"
+export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
+
+opts=
+opts="$opts -DCMAKE_BUILD_TYPE=Release"
+opts="$opts -DCMAKE_INSTALL_PREFIX=$PREFIX"
+opts="$opts -DCMAKE_INSTALL_LIBDIR=lib"
+
+opts="$opts -DCMAKE_FIND_FRAMEWORK=NEVER"
+opts="$opts -DCMAKE_FIND_APPBUNDLE=NEVER"
 
 if [[ "$mpi" == "nompi" ]]; then
-  sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
+  opts="$opts -DWITH_MPI=no"
 else
-  sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
+  opts="$opts -DWITH_MPI=yes"
 fi
-echo "<<< arch.make >>>"
-cat arch.make
-echo "<<< arch.make done >>>"
 
-function mkcp {
-    local target=$1
-    shift
-    local exe=$target
-    if [ $# -ge 1 ]; then
-	    exe=$1
-	    shift
-    fi
-    echo "RUNNING: make $target"
-    make $target
-    cp -av $target $PREFIX/bin/$exe
-    make clean
-}
+# Add NetCDF
+opts="$opts -DWITH_LIBXC=on"
+opts="$opts -DWITH_NCDF=on"
 
-# First make a few of the libraries to check that they work!
-make libxmlparser.a
-# Try and build FoX to catch any debugs
-# make FoX/.config || cat FoX/config.log
+# We will fetch the compatible versions
+opts="$opts -DLIBFDF_FIND_METHOD=fetch"
+opts="$opts -DLIBGRIDXC_FIND_METHOD=fetch"
+opts="$opts -DLIBPSML_FIND_METHOD=fetch"
+opts="$opts -DLIBXMLF90_FIND_METHOD=fetch"
 
-ls -l
-make version
-cat compinfo.F90
-mkcp siesta
-make version
-mkcp transiesta
-
-cd ../Util/Bands
-mkcp eigfat2plot
-mkcp gnubands
-
-cd ../COOP
-mkcp mprop
-mkcp fat
-
-cd ../Denchar/Src
-mkcp denchar
-
-cd ../../Eig2DOS
-mkcp Eig2DOS
-
-# Apparently the NetCDF module can *only* be found in Siesta compilation
-#    ???
-#cd ../Gen-basis
-# mkcp gen-basis
-# mkcp ioncat
-
-cd ../Grid
-mkcp grid2cube
-# mkcp cdf2xsf
-# mkcp cdf2grid
-mkcp grid_rotate
-mkcp grid_supercell
-
-cd ../Optical
-mkcp optical
-mkcp optical_input
-
-cd ../TBTrans
-mkcp tbtrans tbtrans_old
-cd ../TBTrans_rep
-mkcp tbtrans
-
-cd ../Vibra/Src
-mkcp fcbuild
-mkcp vibra
-
-cd ../../VCA
-mkcp mixps
-mkcp fractional
-
-cd ../WFS
-mkcp readwf
-mkcp readwfx
-mkcp info_wfsx
-mkcp wfs2wfsx
-mkcp wfsx2wfs
-# mkcp wfsnc2fsx
+cmake -S. -Bobj_cmake $opts
+cmake --build obj_cmake --target install
