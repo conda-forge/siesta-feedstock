@@ -3,21 +3,15 @@
 # error on faulty execution
 set -ex
 
-# Remove __FILE__ lines in utils file.
-sed -i -e "s:__FILE__:'fdf/utils.F90':g" Src/fdf/utils.F90
-
 echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 
-# Use the default utilities, for now.
-cd Obj
-../Src/obj_setup.sh
+# OpenMPI has the *.mod files in /lib
+export FFLAGS="$FFLAGS -I$PREFIX/lib"
 
 #if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
   # Workaround for https://github.com/conda-forge/scalapack-feedstock/pull/30#issuecomment-1061196317
-  export FFLAGS="$FFLAGS -fallow-argument-mismatch"
-  export DEBUG_FFLAGS="$DEBUG_FFLAGS -fallow-argument-mismatch"
   export OMPI_FCFLAGS="$FFLAGS"
 #fi
 
@@ -36,123 +30,76 @@ if [[ "$(uname)" == "Darwin" ]]; then
   #  (for architecture x86_64) because larger updated load commands do not fit (the program must be relinked, and you may need to use -headerpad or -headerpad_max_install_names)
   export SONAME="-Wl,-install_name,@rpath/"
   export LDFLAGS="${LDFLAGS} -headerpad_max_install_names"
+
+  # Currently there is a problem with the compiler on Mac
+  # The version-info will be created in a wrong setup...
+  # So we have to do something else...
+  # This will just mean we won't parse the flags etc.
+  # Should not be a problem.
+  sed -i -e 's:@:#:g' Src/version-info-template.inc
 else
   export SONAME="-Wl,-soname,"
 fi
 
 if [[ "$mpi" != "nompi" ]]; then
-  # This is not necessary as the arch.make files
-  # handles this correctly
   echo "passing on setting CC and FC for non-mpi"
-  #export CC=mpicc
-  #export FC=mpifort
+  export CC=mpicc
+  export FC=mpifort
 fi
 
 # Get the version
 echo "CC version string: $($CC --version | head -1)"
 
 if [[ -n "$GCC_AR" ]]; then
-    repl="$repl;s:%AR%:$GCC_AR:g"
-else
-    repl="$repl;s:%AR%:$AR:g"
+  export AR=$GCC_AR
 fi
 if [[ -n "$GCC_RANLIB" ]]; then
-    repl="$repl;s:%RANLIB%:$GCC_RANLIB:g"
-else
-    repl="$repl;s:%RANLIB%:$RANLIB:g"
+  export RANLIB=$GCC_RANLIB
 fi
-repl="$repl;s:%CC%:$CC:g"
-repl="$repl;s:%FC%:$FC:g"
-# No OpenMP!
-repl="$repl;s:%CFLAGS%:${CFLAGS//-fopenmp/}:g"
-repl="$repl;s:%FFLAGS%:${FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%FFLAGS_DEBUG%:${DEBUG_FFLAGS//-fopenmp/}:g"
-repl="$repl;s:%INCFLAGS%:-I$PREFIX/include:g"
-repl="$repl;s:%LDFLAGS%:-L$PREFIX/lib $LDFLAGS:g"
+export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
 if [[ "$mpi" == "nompi" ]]; then
-  sed -e "$repl" $RECIPE_DIR/arch.make.SEQ > arch.make
+  MPI=OFF
 else
-  sed -e "$repl" $RECIPE_DIR/arch.make.MPI > arch.make
+  MPI=ON
 fi
-echo "<<< arch.make >>>"
-cat arch.make
-echo "<<< arch.make done >>>"
 
-function mkcp {
-    local target=$1
-    shift
-    local exe=$target
-    if [ $# -ge 1 ]; then
-	    exe=$1
-	    shift
-    fi
-    echo "RUNNING: make $target"
-    make $target
-    cp -av $target $PREFIX/bin/$exe
-    make clean
-}
+cmake_opts=(
+  # Add NetCDF
+  "-DWITH_LIBXC=on"
+  "-DWITH_NCDF=on"
 
-# First make a few of the libraries to check that they work!
-make libxmlparser.a
-# Try and build FoX to catch any debugs
-# make FoX/.config || cat FoX/config.log
+  # Disable flook
+  "-DWITH_FLOOK=off"
 
-ls -l
-make version
-cat compinfo.F90
-mkcp siesta
-make version
-mkcp transiesta
+  # MPI
+  "-DWITH_MPI=${MPI}"
 
-cd ../Util/Bands
-mkcp eigfat2plot
-mkcp gnubands
+  # We will fetch the compatible versions
+  "-DLIBFDF_FIND_METHOD=fetch"
+  "-DLIBGRIDXC_FIND_METHOD=fetch"
+  "-DLIBPSML_FIND_METHOD=fetch"
+  "-DXMLF90_FIND_METHOD=fetch"
 
-cd ../COOP
-mkcp mprop
-mkcp fat
+  "-DCMAKE_BUILD_TYPE=Release"
+  "-DCMAKE_INSTALL_LIBDIR=lib"
 
-cd ../Denchar/Src
-mkcp denchar
+  # Request that the makefile is verbose
+  "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
 
-cd ../../Eig2DOS
-mkcp Eig2DOS
+  # I don't think these are required.
+  # They are intended to omit linking to direct
+  "-DCMAKE_FIND_FRAMEWORK=NEVER"
+  "-DCMAKE_FIND_APPBUNDLE=NEVER"
 
-# Apparently the NetCDF module can *only* be found in Siesta compilation
-#    ???
-#cd ../Gen-basis
-# mkcp gen-basis
-# mkcp ioncat
+  # To not clutter things
+  "-DCMAKE_INSTALL_PREFIX=$PREFIX"
+)
 
-cd ../Grid
-mkcp grid2cube
-# mkcp cdf2xsf
-# mkcp cdf2grid
-mkcp grid_rotate
-mkcp grid_supercell
+cmake -S. -Bobj_cmake "${cmake_opts[@]}"
 
-cd ../Optical
-mkcp optical
-mkcp optical_input
-
-cd ../TBTrans
-mkcp tbtrans tbtrans_old
-cd ../TBTrans_rep
-mkcp tbtrans
-
-cd ../Vibra/Src
-mkcp fcbuild
-mkcp vibra
-
-cd ../../VCA
-mkcp mixps
-mkcp fractional
-
-cd ../WFS
-mkcp readwf
-mkcp readwfx
-mkcp info_wfsx
-mkcp wfs2wfsx
-mkcp wfsx2wfs
-# mkcp wfsnc2fsx
+echo ">>>>>>>"
+echo "Showing version-info.inc: "
+cat obj_cmake/Src/version-info.inc
+echo ">>>>>>>"
+cmake --build obj_cmake --target install

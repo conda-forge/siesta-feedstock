@@ -4,13 +4,13 @@ set -e
 echo "Running tests"
 ls -l
 
-for cmd in siesta transiesta tbtrans \
+for cmd in siesta tbtrans phtrans \
 		  eigfat2plot gnubands mprop fat \
 		  denchar Eig2DOS \
 		  grid2cube grid_rotate grid_supercell \
 		  fcbuild vibra \
 		  mixps fractional \
-		  readwf readwfx info_wfsx wfs2wfsx wfsx2wfs
+		  readwf readwfx wfs2wfsx wfsx2wfs
 do
     echo "checking cmd = $cmd"
     command -v $cmd
@@ -23,21 +23,25 @@ export OMPI_MCA_plm=isolated
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export OMPI_MCA_rmaps_base_oversubscribe=yes
 
-# Run H2O system
-echo "Running h2o test"
-mkdir h2o
+# Run CG system
+echo "Running CG test"
+mkdir cg
 
-pushd h2o
-cp ../Tests/Pseudos/H.psf .
-cp ../Tests/Pseudos/O.psf .
-cp ../Tests/h2o/h2o.fdf .
+pushd cg
+
+cp -av ../Tests/08.GeometryOptimization/basejob.fdf cg.fdf
+echo "SystemLabel cg" >> cg.fdf
+echo "MD.TypeOfRun cg" >> cg.fdf
+cp -av ../Tests/Pseudos/Mg.psf .
+cp -av ../Tests/Pseudos/C.psf .
+cp -av ../Tests/Pseudos/O.psf .
 if [[ "$mpi" == "nompi" ]]; then
-    siesta < h2o.fdf > h2o.out
+    siesta cg.fdf > cg.out
 else
-    mpirun siesta < h2o.fdf > h2o.out
+    mpirun siesta cg.fdf > cg.out
 fi
-echo "TEST START : h2o"
-cat h2o.out
-echo "TEST END : h2o"
+echo "TEST START : cg"
+cat cg.out
+echo "TEST END : cg"
 
 popd
