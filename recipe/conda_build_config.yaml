@@ -2,3 +2,7 @@ mpi:
   - nompi
   - mpich  # [unix]
   - openmpi  # [unix]
+
+channel_targets:
+  # Remove this for proper releases
+  - conda-forge siesta_rc

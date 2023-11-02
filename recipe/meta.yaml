@@ -1,7 +1,7 @@
 {% set name = "siesta" %}
 {% set siesta_version = "5.0.0-beta1" %}
-# This changes the X.Y.Z-betaW to X.Y.Z.W
-{% set version = ".".join(siesta_version.replace("beta", "b").split("-b")) %}
+# This changes the X.Y.Z-betaW to X.Y.ZrcW
+{% set version = "rc".join(siesta_version.replace("beta", "b").split("-b")) %}
 {% set sha256 = "fdc03d224b07c55cfad629958901e7008bc3a1973c3ee7749bc2310671f49ac2" %}
 
 package:
