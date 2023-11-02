@@ -8,7 +8,7 @@ echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 
 # OpenMPI has the *.mod files in /lib
-export FFFLAGS="-I$PREFIX/lib"
+export FFLAGS="$FFLAGS -I$PREFIX/lib"
 
 #if [[ "$target_platform" == linux-* || "$target_platform" == "osx-arm64"  ]]; then
   # Workaround for https://github.com/conda-forge/scalapack-feedstock/pull/30#issuecomment-1061196317
@@ -76,6 +76,9 @@ cmake_opts=(
 
   "-DCMAKE_BUILD_TYPE=Release"
   "-DCMAKE_INSTALL_LIBDIR=lib"
+
+  # Request that the makefile is verbose
+  "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
 
   # I don't think these are required.
   # They are intended to omit linking to direct
