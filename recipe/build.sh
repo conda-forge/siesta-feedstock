@@ -30,6 +30,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
   #  (for architecture x86_64) because larger updated load commands do not fit (the program must be relinked, and you may need to use -headerpad or -headerpad_max_install_names)
   export SONAME="-Wl,-install_name,@rpath/"
   export LDFLAGS="${LDFLAGS} -headerpad_max_install_names"
+
+  # Currently there is a problem with the compiler on Mac
+  # The version-info will be created in a wrong setup...
+  # So we have to do something else...
+  # This will just mean we won't parse the flags etc.
+  # Should not be a problem.
+  sed -i -e 's:@:#:g' Src/version-info-template.inc
 else
   export SONAME="-Wl,-soname,"
 fi
@@ -90,4 +97,9 @@ cmake_opts=(
 )
 
 cmake -S. -Bobj_cmake "${cmake_opts[@]}"
+
+echo ">>>>>>>"
+echo "Showing version-info.inc: "
+cat obj_cmake/Src/version-info.inc
+echo ">>>>>>>"
 cmake --build obj_cmake --target install
