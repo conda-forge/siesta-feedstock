@@ -100,7 +100,7 @@ cmake_opts=(
   "-DCMAKE_INSTALL_PREFIX=$PREFIX"
 )
 
-cmake -S. -Bobj_cmake "${cmake_opts[@]}"
+cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}"
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "
