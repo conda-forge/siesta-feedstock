@@ -103,6 +103,11 @@ cmake_opts=(
   "-Dblas_cdotu_return_convention_EXITCODE=0"
   "-DWITH_QP_EXITCODE=0"
   "-DWITH_XDP_EXITCODE=0"
+
+  # Avoid SIESTA setting its default fortran flags for release.
+  # In particular, it sets -march=native, which does not work
+  # when cross compiling (or at least for osx_arm64)
+  "-DFortran_FLAGS_RELEASE=-O3"
 )
 
 cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}"
