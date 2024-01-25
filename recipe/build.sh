@@ -98,6 +98,11 @@ cmake_opts=(
 
   # To not clutter things
   "-DCMAKE_INSTALL_PREFIX=$PREFIX"
+  
+  # Mock tests when cross-compiling
+  "-Dblas_cdotu_return_convention_EXITCODE=0"
+  "-DWITH_QP_EXITCODE=0"
+  "-DWITH_XDP_EXITCODE=0"
 )
 
 cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}"
