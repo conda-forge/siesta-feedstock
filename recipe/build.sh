@@ -36,7 +36,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     # In particular, it sets -march=native, which does not work
     # when cross compiling (or at least for osx_arm64)
     "-DFortran_FLAGS_RELEASE=-O3"
-    "-DC_FLAGS_DEBUG=-O3"
+    "-DC_FLAGS_RELEASE=-O3"
   )
 
 else
