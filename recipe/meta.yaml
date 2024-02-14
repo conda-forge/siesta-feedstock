@@ -12,9 +12,11 @@ source:
   fn: {{ name }}-{{ siesta_version }}.tar.gz
   url: https://gitlab.com/siesta-project/siesta/-/releases/{{ siesta_version }}/downloads/siesta-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - patches/include_lua.patch
 
 # Default build version to be stepped with every new build!
-{% set build = 0 %}
+{% set build = 1 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -58,6 +60,7 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
+    - lua
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
@@ -65,7 +68,7 @@ requirements:
     - hdf5 * {{ mpi_prefix }}_*
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
-
+    - lua
 test:
   source_files:
     - Tests/**

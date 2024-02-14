@@ -64,13 +64,17 @@ else
   MPI=ON
 fi
 
+# For flook compilation, we set LUA_DIR so that lua is not compiled again
+# This makes flook use conda's lua version
+export LUA_DIR=${PREFIX}
+
 cmake_opts=(
   # Add NetCDF
   "-DWITH_LIBXC=on"
   "-DWITH_NCDF=on"
 
-  # Disable flook
-  "-DWITH_FLOOK=off"
+  # Enable flook
+  "-DWITH_FLOOK=on"
 
   # MPI
   "-DWITH_MPI=${MPI}"
