@@ -31,6 +31,12 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     "-Dblas_cdotu_return_convention_EXITCODE=0"
     "-DWITH_QP_EXITCODE=0"
     "-DWITH_XDP_EXITCODE=0"
+
+    # Avoid SIESTA setting its default fortran flags for release.
+    # In particular, it sets -march=native, which does not work
+    # when cross compiling (or at least for osx_arm64)
+    "-DFortran_FLAGS_RELEASE=-O3"
+    "-DC_FLAGS_DEBUG=-O3"
   )
 
 else
@@ -116,10 +122,7 @@ cmake_opts=(
   # To not clutter things
   "-DCMAKE_INSTALL_PREFIX=$PREFIX"
 
-  # Avoid SIESTA setting its default fortran flags for release.
-  # In particular, it sets -march=native, which does not work
-  # when cross compiling (or at least for osx_arm64)
-  "-DFortran_FLAGS_RELEASE=-O3"
+  
 )
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
