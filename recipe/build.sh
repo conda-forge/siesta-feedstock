@@ -37,6 +37,12 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     # when cross compiling (or at least for osx_arm64)
     "-DFortran_FLAGS_RELEASE=-O3"
     "-DC_FLAGS_RELEASE=-O3"
+    
+    # Specify kinds so that compilation does not need to execute
+    # code to generate the MPI interfaces.
+    "-DSIESTA_REAL_KINDS='4;8'"
+    "-DSIESTA_INTEGER_KINDS='4;8'"
+
   )
 
 else
