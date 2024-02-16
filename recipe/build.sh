@@ -22,6 +22,32 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OMPI_CXX=$CXX
   export OMPI_FC=$FC
   export OPAL_PREFIX=$PREFIX
+
+  #Turn off DFTD3 when cross compiling because of test-drive
+  D3=off
+  
+  cmake_crosscomp_opts=(
+    # Mock tests when cross-compiling
+    "-Dblas_cdotu_return_convention_EXITCODE=0"
+    "-DWITH_QP_EXITCODE=0"
+    "-DWITH_XDP_EXITCODE=0"
+
+    # Avoid SIESTA setting its default fortran flags for release.
+    # In particular, it sets -march=native, which does not work
+    # when cross compiling (or at least for osx_arm64)
+    "-DFortran_FLAGS_RELEASE=-O3"
+    "-DC_FLAGS_RELEASE=-O3"
+    
+    # Specify kinds so that compilation does not need to execute
+    # code to generate the MPI interfaces.
+    "-DSIESTA_REAL_KINDS='4;8'"
+    "-DSIESTA_INTEGER_KINDS='4;8'"
+
+  )
+
+else
+  D3=on
+  cmake_crosscomp_opts=()
 fi
 
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -75,6 +101,9 @@ cmake_opts=(
 
   # Enable flook
   "-DWITH_FLOOK=on"
+  # Disable DFTD3 when cross compiling, because it uses test-drive, which
+  # fails to compile
+  "-DWITH_DFTD3=${D3}"
 
   # MPI
   "-DWITH_MPI=${MPI}"
@@ -98,9 +127,17 @@ cmake_opts=(
 
   # To not clutter things
   "-DCMAKE_INSTALL_PREFIX=$PREFIX"
+
+  
 )
 
-cmake -S. -Bobj_cmake "${cmake_opts[@]}"
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
+  CMAKE
+else
+  D3=on
+fi
+
+cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}" "${cmake_crosscomp_opts[@]}"
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "

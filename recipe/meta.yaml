@@ -14,6 +14,7 @@ source:
   sha256: {{ sha256 }}
   patches:
     - patches/include_lua.patch
+    - patches/mpi_interfaces_crosscomp.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 1 %}
