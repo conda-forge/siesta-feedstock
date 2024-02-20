@@ -79,6 +79,9 @@ cmake_opts=(
   # MPI
   "-DWITH_MPI=${MPI}"
 
+  # ELPA
+  "-DWITH_ELPA=${MPI}"
+
   # We will fetch the compatible versions
   "-DLIBFDF_FIND_METHOD=fetch"
   "-DLIBGRIDXC_FIND_METHOD=fetch"
