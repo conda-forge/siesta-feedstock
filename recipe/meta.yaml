@@ -61,7 +61,7 @@ requirements:
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
-    - elpa * {{ mpi_prefix }}_* # [mpi != 'nompi']
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
