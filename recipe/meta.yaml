@@ -70,7 +70,7 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
-    - elpa * {{ mpi_prefix }}_* # [mpi != 'nompi']
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
 test:
   source_files:
     - Tests/**
