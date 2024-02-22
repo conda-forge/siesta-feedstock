@@ -16,7 +16,7 @@ source:
     - patches/include_lua.patch
 
 # Default build version to be stepped with every new build!
-{% set build = 1 %}
+{% set build = 2 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -61,6 +61,7 @@ requirements:
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
@@ -69,6 +70,7 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
 test:
   source_files:
     - Tests/**
