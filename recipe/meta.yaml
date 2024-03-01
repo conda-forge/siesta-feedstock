@@ -17,7 +17,7 @@ source:
     - patches/makefile_ncdf-serial.patch
 
 # Default build version to be stepped with every new build!
-{% set build = 4 %}
+{% set build = 5 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
