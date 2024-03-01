@@ -177,3 +177,11 @@ mkcp readwfx
 mkcp wfs2wfsx
 mkcp wfsx2wfs
 mkcp wfsnc2wfsx
+
+cd ../Contrib/APostnikov
+mkcp eig2bxsf
+mkcp fmpdos
+mkcp md2axsf
+mkcp rho2xsf
+mkcp vib2xsf
+mkcp xv2xsf
