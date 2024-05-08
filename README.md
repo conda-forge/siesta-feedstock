@@ -5,7 +5,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/siesta-feedstoc
 
 Home: https://gitlab.com/siesta-project
 
-Package license: GPL-3.0-or-later
+Package license: GPL-3.0-only
 
 Summary: A first-principles materials simulation code using DFT
 
