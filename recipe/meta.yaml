@@ -38,6 +38,7 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - make  # [not win]
