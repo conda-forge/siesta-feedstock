@@ -31,6 +31,17 @@ if [[ "$(uname)" == "Darwin" ]]; then
   export SONAME="-Wl,-install_name,@rpath/"
   export LDFLAGS="${LDFLAGS} -headerpad_max_install_names"
 
+  # Currently there is a problem with the compiler on Mac
+  # The version-info will be created in a wrong setup...
+  # So we have to do something else...
+  # This will just mean we won't parse the flags etc.
+  # It says something like:
+  #
+  #   At line 68 of file /Users/runner/miniforge3/conda-bld/siesta_1715602566272/work/obj_cmake/Src/version-info.inc (unit = 6, file = 'stdout')
+  #   Fortran runtime error: Missing initial left parenthesis in format
+  #   all
+  sed -i -e 's:@:#:g' Src/version-info-template.inc
+
 else
   export SONAME="-Wl,-soname,"
 fi
@@ -83,6 +94,9 @@ cmake_opts=(
   "-DLIBPSML_FIND_METHOD=fetch"
   "-DXMLF90_FIND_METHOD=fetch"
 
+  # Tests should not be runned with MPI (problems with ssh | rsh)
+  "-DSIESTA_TESTS_MPI_NUMPROCS=1"
+
   "-DCMAKE_BUILD_TYPE=Release"
   "-DCMAKE_INSTALL_LIBDIR=lib"
 
@@ -104,4 +118,21 @@ echo ">>>>>>>"
 echo "Showing version-info.inc: "
 cat obj_cmake/Src/version-info.inc
 echo ">>>>>>>"
-cmake --build obj_cmake --target install
+cmake --build obj_cmake -j 2 --target install
+
+
+# Run tests in the build-directory, this is important since the tests folders
+# get deleted after build!
+
+# This is just to ensure it works *better* on lone machines.
+# Users on clusters should do something differently,
+# or unset these.
+export OMPI_MCA_plm=isolated
+export OMPI_MCA_btl_vader_single_copy_mechanism=none
+export OMPI_MCA_rmaps_base_oversubscribe=yes
+
+
+echo "Running tests"
+pushd obj_cmake/Tests/08.GeometryOptimization
+SIESTA_TESTS_VERIFY=1 ctest -L simple || echo "Accepted fail!"
+popd

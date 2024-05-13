@@ -45,6 +45,10 @@ requirements:
     - git
     - cmake
     - pkg-config
+    # Only for tests:
+    - openssh
+    - python
+    - ruamel.yaml
   host:
     - libblas
     - liblapack
@@ -70,9 +74,6 @@ requirements:
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
     - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
-test:
-  source_files:
-    - Tests/**
 
 about:
   home: https://gitlab.com/siesta-project
@@ -90,6 +91,7 @@ about:
     that its accuracy and cost can be tuned in a wide range, from quick
     exploratory calculations to highly accurate simulations matching the
     quality of other approaches, such as plane-wave and all-electron methods.
+  doc_url: https://docs.siesta-project.org/projects/siesta/en/latest/
   dev_url: https://gitlab.com/siesta-project/siesta
 
 extra:
