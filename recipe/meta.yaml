@@ -64,7 +64,7 @@ requirements:
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
-    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi' and not (osx and arm64)]
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
@@ -73,7 +73,7 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
-    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi']
+    - elpa * {{ mpi_prefix }}_*  # [mpi != 'nompi' and not (osx and arm64)]
 
 about:
   home: https://gitlab.com/siesta-project

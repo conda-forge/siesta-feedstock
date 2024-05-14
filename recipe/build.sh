@@ -7,6 +7,12 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 
+if [[ "$mpi" == "nompi" ]]; then
+  MPI=OFF
+else
+  MPI=ON
+fi
+
 # OpenMPI has the *.mod files in /lib
 export FFLAGS="$FFLAGS -I$PREFIX/lib"
 
@@ -24,6 +30,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OPAL_PREFIX=$PREFIX
 
   # Turn off DFTD3 when cross compiling because of test-drive
+  ELPA=off
   D3=off
   
   cmake_crosscomp_opts=(
@@ -46,6 +53,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   )
 
 else
+  ELPA=${MPI}
   D3=on
   cmake_crosscomp_opts=()
 fi
@@ -89,12 +97,6 @@ if [[ -n "$GCC_RANLIB" ]]; then
 fi
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
-if [[ "$mpi" == "nompi" ]]; then
-  MPI=OFF
-else
-  MPI=ON
-fi
-
 # For flook compilation, we set LUA_DIR so that lua is not compiled again
 # This makes flook use conda's lua version
 export LUA_DIR=${PREFIX}
@@ -115,7 +117,7 @@ cmake_opts=(
   "-DSIESTA_WITH_MPI=${MPI}"
 
   # ELPA
-  "-DSIESTA_WITH_ELPA=${MPI}"
+  "-DSIESTA_WITH_ELPA=${ELPA}"
 
   # We will fetch the compatible versions
   "-DSIESTA_FIND_METHOD=fetch"

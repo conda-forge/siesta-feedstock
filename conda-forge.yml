@@ -1,7 +1,6 @@
 bot:
   abi_migration_branches:
   - main
-  - v4.1.x
 build_platform:
   osx_arm64: osx_64
 conda_build:
@@ -13,4 +12,3 @@ github:
   tooling_branch_name: main
 conda_build:
   pkg_format: '2'
-test_on_native_only: true
