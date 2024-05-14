@@ -1,14 +1,14 @@
+bot:
+  abi_migration_branches:
+  - main
+build_platform:
+  osx_arm64: osx_64
+conda_build:
+  pkg_format: '2'
 conda_forge_output_validation: true
-#build_platform:
-#  osx_arm64: osx_64
 test: native_and_emulated
 github:
   branch_name: main
   tooling_branch_name: main
 conda_build:
   pkg_format: '2'
-bot:
-  abi_migration_branches:
-  - main
-  - v4.1.x
-    # no v4.0.x

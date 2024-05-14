@@ -7,6 +7,12 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 
+if [[ "$mpi" == "nompi" ]]; then
+  MPI=OFF
+else
+  MPI=ON
+fi
+
 # OpenMPI has the *.mod files in /lib
 export FFLAGS="$FFLAGS -I$PREFIX/lib"
 
@@ -22,6 +28,33 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OMPI_CXX=$CXX
   export OMPI_FC=$FC
   export OPAL_PREFIX=$PREFIX
+
+  # Turn off these things when cross compiling
+  ELPA=off
+  D3=off
+  
+  cmake_crosscomp_opts=(
+    # Mock tests when cross-compiling
+    "-Dblas_cdotu_return_convention_EXITCODE=0"
+    "-DWITH_QP_EXITCODE=0"
+    "-DWITH_XDP_EXITCODE=0"
+
+    # Avoid SIESTA setting its default fortran flags for release.
+    # In particular, it sets -march=native, which does not work
+    # when cross compiling (or at least for osx_arm64)
+    "-DFortran_FLAGS_RELEASE=-O3"
+    "-DC_FLAGS_RELEASE=-O3"
+    "-DCXX_FLAGS_RELEASE=-O3"
+
+    # Force specify the kinds for cross-compilation
+    "-DSIESTA_REAL_KINDS='4;8'"
+    "-DSIESTA_INTEGER_KINDS='4;8'"
+  )
+
+else
+  ELPA=${MPI}
+  D3=on
+  cmake_crosscomp_opts=()
 fi
 
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -63,29 +96,27 @@ if [[ -n "$GCC_RANLIB" ]]; then
 fi
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
-if [[ "$mpi" == "nompi" ]]; then
-  MPI=OFF
-else
-  MPI=ON
-fi
-
 # For flook compilation, we set LUA_DIR so that lua is not compiled again
 # This makes flook use conda's lua version
 export LUA_DIR=${PREFIX}
 
 cmake_opts=(
   # Add NetCDF
-  "-DSIESTA_WITH_LIBXC=on"
   "-DSIESTA_WITH_NCDF=on"
+  "-DSIESTA_WITH_LIBXC=on"
 
   # Enable flook
   "-DSIESTA_WITH_FLOOK=on"
+  
+  # Disable DFTD3 when cross compiling, because it uses test-drive, which
+  # fails to compile
+  "-DSIESTA_WITH_DFTD3=${D3}"
 
   # MPI
   "-DSIESTA_WITH_MPI=${MPI}"
 
   # ELPA
-  "-DSIESTA_WITH_ELPA=${MPI}"
+  "-DSIESTA_WITH_ELPA=${ELPA}"
 
   # We will fetch the compatible versions
   "-DSIESTA_FIND_METHOD=fetch"
@@ -107,12 +138,10 @@ cmake_opts=(
   # They are intended to omit linking to direct
   "-DCMAKE_FIND_FRAMEWORK=NEVER"
   "-DCMAKE_FIND_APPBUNDLE=NEVER"
-
-  # To not clutter things
-  "-DCMAKE_INSTALL_PREFIX=$PREFIX"
 )
 
-cmake -S. -Bobj_cmake "${cmake_opts[@]}"
+
+cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}" "${cmake_crosscomp_opts[@]}"
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "
@@ -120,6 +149,11 @@ cat obj_cmake/Src/version-info.inc
 echo ">>>>>>>"
 cmake --build obj_cmake -j 2 --target install
 
+
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
+  # Cross-compilation cannot run tests
+  exit 0
+fi
 
 # Run tests in the build-directory, this is important since the tests folders
 # get deleted after build!
@@ -130,7 +164,6 @@ cmake --build obj_cmake -j 2 --target install
 export OMPI_MCA_plm=isolated
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export OMPI_MCA_rmaps_base_oversubscribe=yes
-
 
 echo "Running tests"
 pushd obj_cmake/Tests/08.GeometryOptimization
