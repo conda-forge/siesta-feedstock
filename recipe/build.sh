@@ -37,12 +37,12 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     # when cross compiling (or at least for osx_arm64)
     "-DFortran_FLAGS_RELEASE=-O3"
     "-DC_FLAGS_RELEASE=-O3"
+    "-DCXX_FLAGS_RELEASE=-O3"
     
     # Specify kinds so that compilation does not need to execute
     # code to generate the MPI interfaces.
     "-DSIESTA_REAL_KINDS='4;8'"
     "-DSIESTA_INTEGER_KINDS='4;8'"
-
   )
 
 else
@@ -101,8 +101,8 @@ export LUA_DIR=${PREFIX}
 
 cmake_opts=(
   # Add NetCDF
-  "-DSIESTA_WITH_LIBXC=on"
   "-DSIESTA_WITH_NCDF=on"
+  "-DSIESTA_WITH_LIBXC=on"
 
   # Enable flook
   "-DSIESTA_WITH_FLOOK=on"
@@ -137,11 +137,6 @@ cmake_opts=(
   # They are intended to omit linking to direct
   "-DCMAKE_FIND_FRAMEWORK=NEVER"
   "-DCMAKE_FIND_APPBUNDLE=NEVER"
-
-  # To not clutter things
-  "-DCMAKE_INSTALL_PREFIX=$PREFIX"
-
-  
 )
 
 
@@ -153,6 +148,11 @@ cat obj_cmake/Src/version-info.inc
 echo ">>>>>>>"
 cmake --build obj_cmake -j 2 --target install
 
+
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
+  # Cross-compilation cannot run tests
+  exit 0
+fi
 
 # Run tests in the build-directory, this is important since the tests folders
 # get deleted after build!
