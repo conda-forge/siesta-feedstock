@@ -1,7 +1,7 @@
 mpi:
   - nompi
-  - mpich  # [unix]
-  - openmpi  # [unix]
+  - mpich
+  - openmpi
 
 channel_targets:
   # Remove this for proper releases

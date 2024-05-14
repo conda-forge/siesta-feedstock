@@ -29,7 +29,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OMPI_FC=$FC
   export OPAL_PREFIX=$PREFIX
 
-  # Turn off DFTD3 when cross compiling because of test-drive
+  # Turn off these things when cross compiling
   ELPA=off
   D3=off
   
@@ -45,9 +45,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     "-DFortran_FLAGS_RELEASE=-O3"
     "-DC_FLAGS_RELEASE=-O3"
     "-DCXX_FLAGS_RELEASE=-O3"
-    
-    # Specify kinds so that compilation does not need to execute
-    # code to generate the MPI interfaces.
+
+    # Force specify the kinds for cross-compilation
     "-DSIESTA_REAL_KINDS='4;8'"
     "-DSIESTA_INTEGER_KINDS='4;8'"
   )

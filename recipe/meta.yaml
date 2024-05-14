@@ -33,8 +33,11 @@ source:
 build:
   number: {{ build }}
   skip: true  # [win]
-
+  #skip: true  # [mpi != 'nompi' and osx and arm64]
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+  patches:
+    - patches/mpi_interfaces_crosscomp.patch
+
 
 requirements:
   build:
@@ -44,7 +47,12 @@ requirements:
     - make  # [not win]
     - git
     - cmake
+    - llvm-openmp  # [osx]
+    - libgomp  # [linux]
     - pkg-config
+    # Courtesy of DFTB+ feedstock:
+    # OpenMPI-framework is not found otherwise when cross compiling for osx_arm64
+    - {{ mpi }}  # [mpi == "openmpi" and (osx and arm64)]
     # Only for tests:
     - openssh
     - python
