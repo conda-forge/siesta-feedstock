@@ -122,14 +122,14 @@ Current release info
 Installing siesta
 =================
 
-Installing `siesta` from the `conda-forge/label/siesta_rc` channel can be achieved by adding `conda-forge/label/siesta_rc` to your channels with:
+Installing `siesta` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
-conda config --add channels conda-forge/label/siesta_rc
+conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge/label/siesta_rc` channel has been enabled, `siesta` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `siesta` can be installed with `conda`:
 
 ```
 conda install siesta
@@ -144,26 +144,26 @@ mamba install siesta
 It is possible to list all of the versions of `siesta` available on your platform with `conda`:
 
 ```
-conda search siesta --channel conda-forge/label/siesta_rc
+conda search siesta --channel conda-forge
 ```
 
 or with `mamba`:
 
 ```
-mamba search siesta --channel conda-forge/label/siesta_rc
+mamba search siesta --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search siesta --channel conda-forge/label/siesta_rc
+mamba repoquery search siesta --channel conda-forge
 
 # List packages depending on `siesta`:
-mamba repoquery whoneeds siesta --channel conda-forge/label/siesta_rc
+mamba repoquery whoneeds siesta --channel conda-forge
 
 # List dependencies of `siesta`:
-mamba repoquery depends siesta --channel conda-forge/label/siesta_rc
+mamba repoquery depends siesta --channel conda-forge
 ```
 
 
