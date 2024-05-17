@@ -39,13 +39,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
     "-DWITH_QP_EXITCODE=0"
     "-DWITH_XDP_EXITCODE=0"
 
-    # Avoid SIESTA setting its default fortran flags for release.
-    # In particular, it sets -march=native, which does not work
-    # when cross compiling (or at least for osx_arm64)
-    "-DFortran_FLAGS_RELEASE=-O3"
-    "-DC_FLAGS_RELEASE=-O3"
-    "-DCXX_FLAGS_RELEASE=-O3"
-
     # Force specify the kinds for cross-compilation
     "-DSIESTA_REAL_KINDS='4;8'"
     "-DSIESTA_INTEGER_KINDS='4;8'"
@@ -127,6 +120,13 @@ cmake_opts=(
 
   # Tests should not be runned with MPI (problems with ssh | rsh)
   "-DSIESTA_TESTS_MPI_NUMPROCS=1"
+    
+  # Avoid SIESTA setting its default fortran flags for release.
+  # In particular, it sets -march=native, which does not work
+  # when cross compiling (or at least for osx_arm64)
+  "-DFortran_FLAGS_RELEASE=-O3"
+  "-DC_FLAGS_RELEASE=-O3"
+  "-DCXX_FLAGS_RELEASE=-O3"
 
   "-DCMAKE_BUILD_TYPE=Release"
   "-DCMAKE_INSTALL_LIBDIR=lib"
