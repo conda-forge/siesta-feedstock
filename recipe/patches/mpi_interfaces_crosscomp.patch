@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 335cc12c8..0e008af26 100644
+index f52a73047..2728a1d41 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -564,6 +564,8 @@ siesta_print_feature_info(
+@@ -549,6 +549,8 @@ siesta_print_feature_info(
      SIESTA_EXECUTABLE_SUFFIX
      SIESTA_SHARED_LIBRARY_SUFFIX
      SIESTA_STATIC_LIBRARY_SUFFIX
@@ -48,10 +48,10 @@ index c5e902f3a..7b3e035d5 100644
  # Empty line
  message(${_mode} "Done with build information")
 diff --git a/INSTALL.md b/INSTALL.md
-index 5f857cc25..352610076 100644
+index 7b1251cc9..e7a276f47 100644
 --- a/INSTALL.md
 +++ b/INSTALL.md
-@@ -515,6 +515,20 @@ profiling options are:
+@@ -489,6 +489,20 @@ profiling options are:
  The EXTRAE library by BSC can be used to generate MPI traces, but its configuration is not
  yet supported by the CMake build system. See the next section.
  
@@ -73,7 +73,7 @@ index 5f857cc25..352610076 100644
  
  Some options are not yet supported directly by the CMake framework, but
 diff --git a/Src/MPI/CMakeLists.txt b/Src/MPI/CMakeLists.txt
-index bb6f806f2..c1d7c12ae 100644
+index f415a52f8..c1d7c12ae 100644
 --- a/Src/MPI/CMakeLists.txt
 +++ b/Src/MPI/CMakeLists.txt
 @@ -4,6 +4,7 @@ add_library(mpi_siesta
@@ -145,7 +145,7 @@ index bb6f806f2..c1d7c12ae 100644
 -  OUTPUT Interfaces.f90 VS.uses V_S.uses
 -  # Dependency targets
 -  DEPENDS mpi_int_explorer mpi_kind_explorer
--  COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/generate.sh
+-  COMMAND sh "${CMAKE_CURRENT_SOURCE_DIR}/generate.sh"
 +  OUTPUT Interfaces.f90
 +  DEPENDS mpi_kind_explorer
 +  COMMAND sh "${CMAKE_CURRENT_SOURCE_DIR}/generate_real.sh" ${SIESTA_REAL_KINDS_STR}
@@ -162,14 +162,14 @@ index bb6f806f2..c1d7c12ae 100644
 +  )
 diff --git a/Src/MPI/generate.sh b/Src/MPI/generate.sh
 deleted file mode 100644
-index 3f1c80861..000000000
+index 26c445bb6..000000000
 --- a/Src/MPI/generate.sh
 +++ /dev/null
 @@ -1,58 +0,0 @@
 -#!/bin/sh
 -#
 -### set -x
--dir=$(dirname $0)
+-dir=$(dirname "$0")
 -#
 -echo " ===> Generating module files from templates..."
 -
@@ -226,12 +226,11 @@ index 3f1c80861..000000000
 -done
 diff --git a/Src/MPI/generate_integer.sh b/Src/MPI/generate_integer.sh
 new file mode 100644
-index 000000000..76c7aeebd
+index 000000000..1d10b0640
 --- /dev/null
 +++ b/Src/MPI/generate_integer.sh
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,29 @@
 +#!/bin/sh
-+#
 +### set -x
 +dir=$(dirname "$0")
 +
@@ -262,13 +261,12 @@ index 000000000..76c7aeebd
 +done
 diff --git a/Src/MPI/generate_real.sh b/Src/MPI/generate_real.sh
 new file mode 100644
-index 000000000..22c7f1c7d
+index 000000000..06f5357e1
 --- /dev/null
 +++ b/Src/MPI/generate_real.sh
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,44 @@
 +#!/bin/sh
 +### set -x
-+#
 +dir=$(dirname "$0")
 +
 +echo " ===> Generating real, logical, character module files from templates..."
