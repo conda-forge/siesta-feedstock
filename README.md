@@ -3,15 +3,15 @@ About siesta-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/siesta-feedstock/blob/main/LICENSE.txt)
 
-Home: https://gitlab.com/siesta-project
+Home: https://siesta-project.org/siesta/
 
 Package license: GPL-3.0-only
 
 Summary: A first-principles materials simulation code using DFT
 
-Development: https://gitlab.com/siesta-project/siesta
+Development: https://gitlab.com/siesta-project/siesta/
 
-Documentation: https://docs.siesta-project.org/projects/siesta/en/latest/
+Documentation: https://docs.siesta-project.org/projects/siesta/
 
 SIESTA is both a method and its computer program implementation,
 to perform efficient electronic structure calculations and ab initio

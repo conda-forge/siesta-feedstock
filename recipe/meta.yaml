@@ -1,8 +1,8 @@
 {% set name = "siesta" %}
-{% set siesta_version = "5.0.0" %}
+{% set siesta_version = "5.0.1" %}
 # This changes the X.Y.Z-betaW to X.Y.ZrcW
 {% set version = siesta_version.replace("-beta", "b") %}
-{% set sha256 = "b7c18e0bbfb4c8707c483fc516953c10ea5489de43a744957a9b0e10fb4ae5af" %}
+{% set sha256 = "1933cde879d921577a5e854c459531951d0afc9fd193f086a04457e9022ba9a0" %}
 
 package:
   name: {{ name }}
@@ -12,8 +12,6 @@ source:
   fn: {{ name }}-{{ siesta_version }}.tar.gz
   url: https://gitlab.com/siesta-project/siesta/-/releases/{{ siesta_version }}/downloads/siesta-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - patches/mpi_interfaces_crosscomp.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 0 %}
