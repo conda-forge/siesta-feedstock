@@ -145,7 +145,7 @@ cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}" "${cmake_crosscomp_opts[@
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "
-cat obj_cmake/Src/version-info.inc
+cat -v obj_cmake/Src/version-info.inc
 echo ">>>>>>>"
 cmake --build obj_cmake -j 2 --target install
 
