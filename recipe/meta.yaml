@@ -12,6 +12,8 @@ source:
   fn: {{ name }}-{{ siesta_version }}.tar.gz
   url: https://gitlab.com/siesta-project/siesta/-/releases/{{ siesta_version }}/downloads/siesta-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - patches/add-conda.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 1 %}
@@ -35,8 +37,6 @@ build:
   skip: true  # [win]
   #skip: true  # [mpi != 'nompi' and osx and arm64]
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
-  patches:
-    - patches/add-conda.patch
 
 
 requirements:
