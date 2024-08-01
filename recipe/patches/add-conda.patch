@@ -12,13 +12,13 @@ index 877616b70..ade6d879f 100644
  if(PROJECT_IS_TOP_LEVEL)
 diff --git a/Config/cmake/SiestaConda.cmake b/Config/cmake/SiestaConda.cmake
 new file mode 100644
-index 000000000..60ac20e36
+index 000000000..a4166063b
 --- /dev/null
 +++ b/Config/cmake/SiestaConda.cmake
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,39 @@
 +# utility package to detect conda builds
 +
-+set(SIESTAconda_build "$ENV{CONDA_BLD_PATH}")
++set(SIESTA_conda_build "$ENV{CONDA_BLD_PATH}")
 +
 +
 +if(NOT SIESTA_conda_build)
@@ -31,11 +31,8 @@ index 000000000..60ac20e36
 +  Fortran_PPFLAGS_CURRENT_multiline
 +  "${Fortran_PPFLAGS_CURRENT_multiline}")
 +
-+
 +  # Equivalent to PREFIX in conda-builds
 +  set(SIESTA_conda_PREFIX "" CACHE STRING "conda-build specifies the PREFIX variable")
-+  # Equivalent to BUILD_PREFIX in conda-builds
-+  set(SIESTA_conda_BUILD_PREFIX "" CACHE STRING "conda-build specifies the BUILD_PREFIX variable")
 +
 +  return()
 +endif()
@@ -45,17 +42,16 @@ index 000000000..60ac20e36
 +
 +# Equivalent to PREFIX in conda-builds
 +set(SIESTA_conda_PREFIX "$ENV{PREFIX}" CACHE STRING "conda-build specifies the PREFIX variable")
-+# Equivalent to BUILD_PREFIX in conda-builds
-+set(SIESTA_conda_BUILD_PREFIX "$ENV{BUILD_PREFIX}" CACHE STRING "conda-build specifies the BUILD_PREFIX variable")
 +
 +macro(siesta_conda_fix var)
-+  string(REPLACE "$SIESTA_CONDA_PREFIX"
++  string(REPLACE "$PREFIX"
 +    "<prefix>"
 +    ${var} "${${var}}"
 +  )
-+  string(REPLACE "$SIESTA_CONDA_BUILD_PREFIX"
-+    "<build-prefix>"
-+    ${var} "${${var}}")
++  string(REPLACE "${SIESTA_conda_PREFIX}"
++    "<prefix>"
++    ${var} "${${var}}"
++  )
 +endmacro()
 +
 +list(POP_BACK CMAKE_MESSAGE_INDENT)
