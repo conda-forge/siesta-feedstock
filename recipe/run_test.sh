@@ -19,3 +19,9 @@ done
 # Show the version of Siesta:
 echo "Show siesta --version output:"
 siesta --version || echo "Forced succes!"
+
+if $(siesta --version | grep -Pa '\x00') ; then
+  echo "Found NULL chars"
+  siesta --version | cat -v
+  exit 1
+fi

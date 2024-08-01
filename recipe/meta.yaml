@@ -14,7 +14,7 @@ source:
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
-{% set build = 0 %}
+{% set build = 1 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -35,6 +35,11 @@ build:
   skip: true  # [win]
   #skip: true  # [mpi != 'nompi' and osx and arm64]
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+  ignore_prefix_files:
+    - **/version-info.inc
+    - **/siesta_version_info.F90
+    - **/siesta_version_info.o
+    - **/configured_values_m.F90
 
 
 requirements:
