@@ -22,6 +22,13 @@ cmake_opts=(
   # Tests should not be runned with MPI (problems with ssh | rsh)
   -DSIESTA_TESTS_MPI_NUMPROCS=1
 
+  # Avoid SIESTA setting its default fortran flags for release.
+  # In particular, it sets -march=native, which does not work
+  # when cross compiling (or at least for osx_arm64)
+  -DFortran_FLAGS_RELEASE=-O3
+  -DC_FLAGS_RELEASE=-O3
+  -DCXX_FLAGS_RELEASE=-O3
+
   # We will fetch the compatible versions
   -DSIESTA_FIND_METHOD=fetch
   -DLIBFDF_FIND_METHOD=fetch
@@ -133,24 +140,14 @@ export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 # This makes flook use conda's lua version
 export LUA_DIR=${PREFIX}
 
-cmake_opts=(
+cmake_opts+=(
 
   # Disable DFTD3 when cross compiling, because it uses test-drive, which
   # fails to compile
-  "-DSIESTA_WITH_DFTD3=${D3}"
-
-  # MPI
-  "-DSIESTA_WITH_MPI=${MPI}"
+  -DSIESTA_WITH_DFTD3=${D3}
 
   # ELPA
-  "-DSIESTA_WITH_ELPA=${ELPA}"
-
-  # Avoid SIESTA setting its default fortran flags for release.
-  # In particular, it sets -march=native, which does not work
-  # when cross compiling (or at least for osx_arm64)
-  "-DFortran_FLAGS_RELEASE=-O3"
-  "-DC_FLAGS_RELEASE=-O3"
-  "-DCXX_FLAGS_RELEASE=-O3"
+  -DSIESTA_WITH_ELPA=${ELPA}
 )
 
 
