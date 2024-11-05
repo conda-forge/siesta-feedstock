@@ -113,6 +113,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # happen.
   cmake_opts+=(
     -DSIESTA_WITH_ELSI=OFF
+
+    # Hard-disable bison+flex on Mac
+    -DCMAKE_DISABLE_FIND_PACKAGE_BISON=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_FLEX=TRUE
   )
 
 else
