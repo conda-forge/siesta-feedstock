@@ -7,11 +7,51 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 
+cmake_opts=(
+  # Request that the makefile is verbose
+  -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
+  # I don't think these are required.
+  # They are intended to omit linking to direct
+  -DCMAKE_FIND_FRAMEWORK=NEVER
+  -DCMAKE_FIND_APPBUNDLE=NEVER
+
+  -DCMAKE_BUILD_TYPE=Release
+  -DCMAKE_INSTALL_LIBDIR=lib
+
+  # Tests should not be runned with MPI (problems with ssh | rsh)
+  -DSIESTA_TESTS_MPI_NUMPROCS=1
+
+  # Avoid SIESTA setting its default fortran flags for release.
+  # In particular, it sets -march=native, which does not work
+  # when cross compiling (or at least for osx_arm64)
+  -DFortran_FLAGS_RELEASE=-O3
+  -DC_FLAGS_RELEASE=-O3
+  -DCXX_FLAGS_RELEASE=-O3
+
+  # We will fetch the compatible versions
+  -DSIESTA_FIND_METHOD=fetch
+  -DLIBFDF_FIND_METHOD=fetch
+  -DLIBGRIDXC_FIND_METHOD=fetch
+  -DLIBPSML_FIND_METHOD=fetch
+  -DXMLF90_FIND_METHOD=fetch
+
+  # Add NetCDF
+  -DSIESTA_WITH_NCDF=on
+  -DSIESTA_WITH_LIBXC=on
+
+  # Enable flook
+  -DSIESTA_WITH_FLOOK=on
+)
+
 if [[ "$mpi" == "nompi" ]]; then
   MPI=OFF
 else
   MPI=ON
 fi
+cmake_opts+=(
+  -DSIESTA_WITH_MPI=${MPI}
+)
 
 # OpenMPI has the *.mod files in /lib
 export FFLAGS="$FFLAGS -I$PREFIX/lib"
@@ -32,8 +72,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   # Turn off these things when cross compiling
   ELPA=off
   D3=off
-  
-  cmake_crosscomp_opts=(
+
+  cmake_opts+=(
     # Mock tests when cross-compiling
     "-Dblas_cdotu_return_convention_EXITCODE=0"
     "-DWITH_QP_EXITCODE=0"
@@ -47,7 +87,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
 else
   ELPA=${MPI}
   D3=on
-  cmake_crosscomp_opts=()
 fi
 
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -67,6 +106,18 @@ if [[ "$(uname)" == "Darwin" ]]; then
   #   Fortran runtime error: Missing initial left parenthesis in format
   #   all
   sed -i -e 's:@:#:g' Src/version-info-template.inc
+
+  # For now the MacOS will disable the ELSI compilation.
+  # There are some problems, and we should probably re-use
+  # the other feedstock for the ELSI development to make this
+  # happen.
+  cmake_opts+=(
+    -DSIESTA_WITH_ELSI=OFF
+
+    # Hard-disable bison+flex on Mac
+    -DCMAKE_DISABLE_FIND_PACKAGE_BISON=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_FLEX=TRUE
+  )
 
 else
   export SONAME="-Wl,-soname,"
@@ -93,55 +144,18 @@ export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 # This makes flook use conda's lua version
 export LUA_DIR=${PREFIX}
 
-cmake_opts=(
-  # Add NetCDF
-  "-DSIESTA_WITH_NCDF=on"
-  "-DSIESTA_WITH_LIBXC=on"
+cmake_opts+=(
 
-  # Enable flook
-  "-DSIESTA_WITH_FLOOK=on"
-  
   # Disable DFTD3 when cross compiling, because it uses test-drive, which
   # fails to compile
-  "-DSIESTA_WITH_DFTD3=${D3}"
-
-  # MPI
-  "-DSIESTA_WITH_MPI=${MPI}"
+  -DSIESTA_WITH_DFTD3=${D3}
 
   # ELPA
-  "-DSIESTA_WITH_ELPA=${ELPA}"
-
-  # We will fetch the compatible versions
-  "-DSIESTA_FIND_METHOD=fetch"
-  "-DLIBFDF_FIND_METHOD=fetch"
-  "-DLIBGRIDXC_FIND_METHOD=fetch"
-  "-DLIBPSML_FIND_METHOD=fetch"
-  "-DXMLF90_FIND_METHOD=fetch"
-
-  # Tests should not be runned with MPI (problems with ssh | rsh)
-  "-DSIESTA_TESTS_MPI_NUMPROCS=1"
-    
-  # Avoid SIESTA setting its default fortran flags for release.
-  # In particular, it sets -march=native, which does not work
-  # when cross compiling (or at least for osx_arm64)
-  "-DFortran_FLAGS_RELEASE=-O3"
-  "-DC_FLAGS_RELEASE=-O3"
-  "-DCXX_FLAGS_RELEASE=-O3"
-
-  "-DCMAKE_BUILD_TYPE=Release"
-  "-DCMAKE_INSTALL_LIBDIR=lib"
-
-  # Request that the makefile is verbose
-  "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
-
-  # I don't think these are required.
-  # They are intended to omit linking to direct
-  "-DCMAKE_FIND_FRAMEWORK=NEVER"
-  "-DCMAKE_FIND_APPBUNDLE=NEVER"
+  -DSIESTA_WITH_ELPA=${ELPA}
 )
 
 
-cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}" "${cmake_crosscomp_opts[@]}"
+cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}"
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "
