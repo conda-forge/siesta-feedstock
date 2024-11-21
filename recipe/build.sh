@@ -40,6 +40,11 @@ cmake_opts=(
   -DSIESTA_WITH_NCDF=on
   -DSIESTA_WITH_LIBXC=on
 
+  # Currently ELPA relies on a too old MPI environment,
+  # so that is holding us back on other envs, say MPI.
+  # Until ELPA picks up a never MPI, we have disabled it.
+  -DSIESTA_WITH_ELPA=off
+
   # Enable flook
   -DSIESTA_WITH_FLOOK=on
 )
@@ -70,7 +75,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OPAL_PREFIX=$PREFIX
 
   # Turn off these things when cross compiling
-  ELPA=off
   D3=off
 
   cmake_opts+=(
@@ -85,7 +89,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   )
 
 else
-  ELPA=${MPI}
   D3=on
 fi
 
@@ -149,9 +152,6 @@ cmake_opts+=(
   # Disable DFTD3 when cross compiling, because it uses test-drive, which
   # fails to compile
   -DSIESTA_WITH_DFTD3=${D3}
-
-  # ELPA
-  -DSIESTA_WITH_ELPA=${ELPA}
 )
 
 
@@ -180,6 +180,11 @@ export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export OMPI_MCA_rmaps_base_oversubscribe=yes
 
 echo "Running tests"
-pushd obj_cmake/Tests/08.GeometryOptimization
-SIESTA_TESTS_VERIFY=1 ctest -L simple || echo "Accepted fail!"
-popd
+# Tests needs to be runned here because the installed
+# binaries does not distribute the tests.
+for d in 00.BasisSets 08.GeometryOptimization
+do
+  pushd obj_cmake/Tests/$d
+  SIESTA_TESTS_VERIFY=1 ctest -L simple
+  popd
+done

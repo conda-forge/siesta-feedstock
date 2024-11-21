@@ -18,4 +18,4 @@ done
 
 # Show the version of Siesta:
 echo "Show siesta --version output:"
-siesta --version || echo "Forced succes!"
+siesta --version
