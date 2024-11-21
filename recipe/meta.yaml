@@ -50,8 +50,8 @@ requirements:
     - pkg-config
     # Courtesy of DFTB+ feedstock:
     # OpenMPI-framework is not found otherwise when cross compiling for osx_arm64
-    - {{ mpi }}  # [mpi == "openmpi" and (osx and arm64)]
-    # Only for tests:
+    - {{ mpi }}  # [mpi == "openmpi" and build_platform != target_platform]
+    # Only for tests (ctests uses Python for verification step):
     - openssh
     - python
     - ruamel.yaml
@@ -61,10 +61,10 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
     - libxc >6.0
-    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version
+    # we need to list libnetcdf and netcdf-fortran twice to get version
     # pinning from conda_build_config and build pinning from {{ mpi_prefix }}
-    - hdf5
-    - hdf5 * {{ mpi_prefix }}_*
+    # We are trying to forcefully remove hdf5 dependency as that should be
+    # provided through libnetcdf.
     - libnetcdf
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
@@ -74,7 +74,6 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
     - libxc >6.0
-    - hdf5 * {{ mpi_prefix }}_*
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
     - lua
