@@ -3,9 +3,18 @@
 # error on faulty execution
 set -ex
 
+_obj=obj_cmake
+# Only for debugging builds
+#   Release|Debug
+_build_type=Release
+
+
+# Simple information before actually starting!
 echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
+echo "Build type=$_build_type"
+
 
 cmake_opts=(
   # Request that the makefile is verbose
@@ -16,11 +25,8 @@ cmake_opts=(
   -DCMAKE_FIND_FRAMEWORK=NEVER
   -DCMAKE_FIND_APPBUNDLE=NEVER
 
-  -DCMAKE_BUILD_TYPE=Release
+  -DCMAKE_BUILD_TYPE=$_build_type
   -DCMAKE_INSTALL_LIBDIR=lib
-
-  # Tests should not be runned with MPI (problems with ssh | rsh)
-  -DSIESTA_TESTS_MPI_NUMPROCS=1
 
   # Avoid SIESTA setting its default fortran flags for release.
   # In particular, it sets -march=native, which does not work
@@ -39,6 +45,11 @@ cmake_opts=(
   # Add NetCDF
   -DSIESTA_WITH_NCDF=on
   -DSIESTA_WITH_LIBXC=on
+
+  # Currently ELPA relies on a too old MPI environment,
+  # so that is holding us back on other envs, say MPI.
+  # Until ELPA picks up a never MPI, we have disabled it.
+  -DSIESTA_WITH_ELPA=off
 
   # Enable flook
   -DSIESTA_WITH_FLOOK=on
@@ -70,7 +81,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OPAL_PREFIX=$PREFIX
 
   # Turn off these things when cross compiling
-  ELPA=off
   D3=off
 
   cmake_opts+=(
@@ -85,7 +95,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   )
 
 else
-  ELPA=${MPI}
   D3=on
 fi
 
@@ -149,19 +158,16 @@ cmake_opts+=(
   # Disable DFTD3 when cross compiling, because it uses test-drive, which
   # fails to compile
   -DSIESTA_WITH_DFTD3=${D3}
-
-  # ELPA
-  -DSIESTA_WITH_ELPA=${ELPA}
 )
 
 
-cmake ${CMAKE_ARGS} -S. -Bobj_cmake "${cmake_opts[@]}"
+cmake ${CMAKE_ARGS} -S. -B$_obj "${cmake_opts[@]}"
 
 echo ">>>>>>>"
 echo "Showing version-info.inc: "
-cat -v obj_cmake/Src/version-info.inc
+cat -v $_obj/Src/version-info.inc
 echo ">>>>>>>"
-cmake --build obj_cmake -j 2 --target install
+cmake --build $_obj -j 2 --target install
 
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
@@ -179,7 +185,20 @@ export OMPI_MCA_plm=isolated
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export OMPI_MCA_rmaps_base_oversubscribe=yes
 
+echo "Running version (check if it is at least executable)"
+siesta_exe=$_obj/Src/siesta
+if [[ $MPI == "ON" ]]; then
+  mpirun -np 2 $siesta_exe --version
+else
+  $siesta_exe --version
+fi
+
 echo "Running tests"
-pushd obj_cmake/Tests/08.GeometryOptimization
-SIESTA_TESTS_VERIFY=1 ctest -L simple || echo "Accepted fail!"
-popd
+# Tests needs to be runned here because the installed
+# binaries does not distribute the tests.
+for d in 00.BasisSets 08.GeometryOptimization
+do
+  pushd $_obj/Tests/$d
+  SIESTA_TESTS_VERIFY=1 ctest --output-on-failure -L simple
+  popd
+done
