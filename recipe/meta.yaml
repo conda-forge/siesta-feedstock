@@ -12,6 +12,8 @@ source:
   fn: {{ name }}-{{ siesta_version }}.tar.gz
   url: https://gitlab.com/siesta-project/siesta/-/releases/{{ siesta_version }}/downloads/siesta-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - patches/425_moremeshsubs.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 2 %}
