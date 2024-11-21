@@ -4,12 +4,17 @@
 set -ex
 
 _obj=obj_cmake
+# Only for debugging builds
+#   Release|Debug
+_build_type=Release
 
+
+# Simple information before actually starting!
 echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
+echo "Build type=$_build_type"
 
-_build_type=Debug
 
 cmake_opts=(
   # Request that the makefile is verbose
@@ -22,6 +27,13 @@ cmake_opts=(
 
   -DCMAKE_BUILD_TYPE=$_build_type
   -DCMAKE_INSTALL_LIBDIR=lib
+
+  # Avoid SIESTA setting its default fortran flags for release.
+  # In particular, it sets -march=native, which does not work
+  # when cross compiling (or at least for osx_arm64)
+  -DFortran_FLAGS_RELEASE=-O3
+  -DC_FLAGS_RELEASE=-O3
+  -DCXX_FLAGS_RELEASE=-O3
 
   # We will fetch the compatible versions
   -DSIESTA_FIND_METHOD=fetch
@@ -42,19 +54,6 @@ cmake_opts=(
   # Enable flook
   -DSIESTA_WITH_FLOOK=on
 )
-
-if [[ "$_build_type" == "Release" ]]; then
-  cmake_opts+=(
-
-    # Avoid SIESTA setting its default fortran flags for release.
-    # In particular, it sets -march=native, which does not work
-    # when cross compiling (or at least for osx_arm64)
-    -DFortran_FLAGS_RELEASE=-O3
-    -DC_FLAGS_RELEASE=-O3
-    -DCXX_FLAGS_RELEASE=-O3
-
-  )
-fi
 
 if [[ "$mpi" == "nompi" ]]; then
   MPI=OFF
