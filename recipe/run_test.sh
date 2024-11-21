@@ -1,7 +1,14 @@
 #!/bin/bash
 set -e
 
-echo "Running tests"
+# This is just to ensure it works *better* on lone machines.
+# Users on clusters should do something differently,
+# or unset these.
+export OMPI_MCA_plm=isolated
+export OMPI_MCA_btl_vader_single_copy_mechanism=none
+export OMPI_MCA_rmaps_base_oversubscribe=yes
+
+echo "Checking that commands exists"
 ls -l
 
 for cmd in siesta tbtrans phtrans \
