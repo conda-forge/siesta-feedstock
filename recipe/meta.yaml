@@ -2,7 +2,7 @@
 {% set siesta_version = "5.2.1" %}
 # This changes the X.Y.Z-betaW to X.Y.ZrcW
 {% set version = siesta_version.replace("-beta", "b") %}
-{% set sha256 = "9548010073662fde9be5e5fd983647cc750ec424106210c3a19b0f354053abd4"
+{% set sha256 = "9548010073662fde9be5e5fd983647cc750ec424106210c3a19b0f354053abd4" %}
 
 package:
   name: {{ name }}
