@@ -21,9 +21,9 @@ fortran_compiler:
 fortran_compiler_version:
 - '13'
 libblas:
-- 3.9 *netlib
+- 3.9.* *netlib
 liblapack:
-- 3.9 *netlib
+- 3.9.* *netlib
 libnetcdf:
 - 4.9.2
 llvm_openmp:
