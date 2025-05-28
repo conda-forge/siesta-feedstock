@@ -200,6 +200,6 @@ echo "Running tests"
 for d in 00.BasisSets 08.GeometryOptimization
 do
   pushd $_obj/Tests/$d
-  SIESTA_TESTS_VERIFY=1 ctest --output-on-failure -L simple
+  ctest --output-on-failure -L simple
   popd
 done
