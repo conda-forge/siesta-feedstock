@@ -14,6 +14,7 @@ echo "Runing with mpi=$mpi and blas=$blas_impl"
 echo "Build on target_platform=$target_platform"
 echo "Build on uname=$(uname)"
 echo "Build type=$_build_type"
+cmake --version
 
 
 cmake_opts=(

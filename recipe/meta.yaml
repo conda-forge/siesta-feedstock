@@ -44,7 +44,7 @@ requirements:
     - {{ compiler('c') }}
     - make  # [not win]
     - git
-    - cmake
+    - cmake <4
     - llvm-openmp  # [osx]
     - libgomp  # [linux]
     - pkg-config
