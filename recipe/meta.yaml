@@ -1,8 +1,8 @@
 {% set name = "siesta" %}
-{% set siesta_version = "5.2.2" %}
+{% set siesta_version = "5.4.0" %}
 # This changes the X.Y.Z-betaW to X.Y.ZrcW
 {% set version = siesta_version.replace("-beta", "b") %}
-{% set sha256 = "4efc58fd5adb9b8f55234f47d11f89d268524b0d4c003d145d89d803da94a58c" %}
+{% set sha256 = "05d0b81f07ce457358991eac337d36a023221f697f9eefef9b23673d1adc38b2" %}
 
 package:
   name: {{ name }}
@@ -22,13 +22,11 @@ source:
 {% if mpi == 'nompi' %}
 # prioritize nompi variant via build number
 {% set build = build + 1000 %}
+{% set mpi_prefix = "nompi" %}
+{% else %}
+{% set mpi_prefix = "mpi_" + mpi %}
 {% endif %}
 
-{% if mpi != 'nompi' %}
-{% set mpi_prefix = "mpi_" + mpi %}
-{% else %}
-{% set mpi_prefix = "nompi" %}
-{% endif %}
 
 build:
   number: {{ build }}
@@ -44,7 +42,7 @@ requirements:
     - {{ compiler('c') }}
     - make  # [not win]
     - git
-    - cmake
+    - cmake <4
     - llvm-openmp  # [osx]
     - libgomp  # [linux]
     - pkg-config
