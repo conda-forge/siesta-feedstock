@@ -82,7 +82,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
   export OPAL_PREFIX=$PREFIX
 
   # Turn off these things when cross compiling
-  D3=on
+  D3=off
 
   cmake_opts+=(
     # Mock tests when cross-compiling
