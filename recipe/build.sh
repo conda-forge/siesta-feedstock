@@ -86,7 +86,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" ]]; then
 
   cmake_opts+=(
     # Mock tests when cross-compiling
-    "-Dblas_cdotu_return_convention_EXITCODE=0"
     "-DWITH_QP_EXITCODE=0"
     "-DWITH_XDP_EXITCODE=0"
 
