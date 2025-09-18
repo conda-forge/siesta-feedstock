@@ -1,8 +1,8 @@
 {% set name = "siesta" %}
-{% set siesta_version = "5.4.0" %}
+{% set siesta_version = "5.4.1" %}
 # This changes the X.Y.Z-betaW to X.Y.ZrcW
 {% set version = siesta_version.replace("-beta", "b") %}
-{% set sha256 = "05d0b81f07ce457358991eac337d36a023221f697f9eefef9b23673d1adc38b2" %}
+{% set sha256 = "531ed2fa021d6a733739b5c1ba7d8cf32fe5aee3df6774a8e748ba3d6faaebcc" %}
 
 package:
   name: {{ name }}
@@ -42,7 +42,7 @@ requirements:
     - {{ compiler('c') }}
     - make  # [not win]
     - git
-    - cmake <4
+    - cmake
     - llvm-openmp  # [osx]
     - libgomp  # [linux]
     - pkg-config
