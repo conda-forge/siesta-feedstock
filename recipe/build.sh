@@ -32,9 +32,7 @@ cmake_opts=(
   # Avoid SIESTA setting its default fortran flags for release.
   # In particular, it sets -march=native, which does not work
   # when cross compiling (or at least for osx_arm64)
-  -DFortran_FLAGS_RELEASE=-O3
-  -DC_FLAGS_RELEASE=-O3
-  -DCXX_FLAGS_RELEASE=-O3
+  -DSIESTA_WITH_HOST_OPTIMIZATION=OFF
 
   # We will fetch the compatible versions
   -DSIESTA_FIND_METHOD=fetch
