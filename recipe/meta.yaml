@@ -1,8 +1,8 @@
 {% set name = "siesta" %}
-{% set siesta_version = "5.4.1" %}
+{% set siesta_version = "5.4.2" %}
 # This changes the X.Y.Z-betaW to X.Y.ZrcW
 {% set version = siesta_version.replace("-beta", "b") %}
-{% set sha256 = "531ed2fa021d6a733739b5c1ba7d8cf32fe5aee3df6774a8e748ba3d6faaebcc" %}
+{% set sha256 = "9cd855bd2702b69785588931aa06e4c1b1036f11b5ef7b01ecc29a7218a38d3f" %}
 
 package:
   name: {{ name }}
@@ -12,8 +12,6 @@ source:
   fn: {{ name }}-{{ siesta_version }}.tar.gz
   url: https://gitlab.com/siesta-project/siesta/-/releases/{{ siesta_version }}/downloads/siesta-{{ siesta_version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - patches/cross-compiling.patch
 
 # Default build version to be stepped with every new build!
 {% set build = 0 %}
