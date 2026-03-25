@@ -67,14 +67,14 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
-    - lua
+    - lua <5.5
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
     - libxc >6.0
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
-    - lua
+    - lua <5.5
 
 about:
   home: https://siesta-project.org/siesta/
