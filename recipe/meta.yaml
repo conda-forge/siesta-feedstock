@@ -14,7 +14,7 @@ source:
   sha256: {{ sha256 }}
 
 # Default build version to be stepped with every new build!
-{% set build = 0 %}
+{% set build = 1 %}
 
 # Define build matrix for MPI vs. non-mpi
 ## ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -67,14 +67,14 @@ requirements:
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran
     - netcdf-fortran * {{ mpi_prefix }}_*
-    - lua
+    - lua <5.5
   run:
     - {{ mpi }}  # [mpi != 'nompi']
     - scalapack  # [mpi != 'nompi']
     - libxc >6.0
     - libnetcdf * {{ mpi_prefix }}_*
     - netcdf-fortran * {{ mpi_prefix }}_*
-    - lua
+    - lua <5.5
 
 about:
   home: https://siesta-project.org/siesta/

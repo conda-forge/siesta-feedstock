@@ -1,3 +1,5 @@
+ace:
+- 8.0.5
 c_compiler:
 - gcc
 c_compiler_version:
@@ -22,8 +24,6 @@ liblapack:
 - 3.9.* *netlib
 libnetcdf:
 - 4.9.3
-lua:
-- '5'
 mpi:
 - nompi
 mpich:
